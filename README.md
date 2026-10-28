@@ -56,6 +56,18 @@ result = dispatcher.run(['1', '0', '1', '1'])
 print(result.verdict, result.output)          # accepted ['ODD']
 ```
 
+## The editor plugin
+
+`editor-plugin` is the plugin of the CyberiadaPro editor, Plugins > Finite
+Automata: Run on a Tape - the automaton step by step on a tape, the editor
+marking the active state and showing the verdict and the output - and Test
+the Tapes... - a tests file, a finding per failing tape. Copy the directory
+as `fa-dispatcher` into the plugin directory of the editor
+(`~/.local/share/Cyberiada/CyberiadaPro/plugins` on Linux) or give the
+editor `--plugin-path` to this repository. The plugin runs `python3 -m
+fad_cli`, so that Python needs the modules of this repository and the
+`CyberiadaML` module.
+
 ## Tests
 
     cd test
@@ -65,8 +77,10 @@ print(result.verdict, result.output)          # accepted ['ODD']
 The tests run the tests files of the examples and of the compat-tests FA
 diagrams (when `cyberiadaml-compat-tests` is found beside this repository),
 check that its `X-FA` negatives are refused, and run the same tapes on
-`hsm-dispatcher-py` as an oracle when it is found. `cmake -B build && cd
-build && ctest` runs both backends. `pylint.sh` runs the linter.
+`hsm-dispatcher-py` as an oracle when it is found. `session_test.py` drives
+the editor session with a script, `plugin_test.py` runs the plugin in the
+batch mode of CyberiadaPro (skipped without it). `cmake -B build && cd build
+&& ctest` runs them all on both backends. `pylint.sh` runs the linter.
 
 ## Requirements
 

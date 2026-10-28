@@ -282,6 +282,7 @@ fa-run DIAGRAM --text TEXT      текст; "-" читает stdin без пос
 fa-run DIAGRAM --tape FILE      файл ленты; "-" читает stdin
 fa-run DIAGRAM --test FILE      файл тестов
 fa-run DIAGRAM --session        сессия редактора через stdin и stdout
+       --diagnostics FILE       с --test: неудачи как замечания редактора
        --join                   выход без пробелов между символами
        --trace                  записи трассировки в stderr
 ```
@@ -297,6 +298,9 @@ fa-run DIAGRAM --session        сессия редактора через stdin
   JA
   ```
 
+* `--diagnostics` записывает неудачи `--test` как файл замечаний плагинов
+  редактора: `error` на состоянии, где остановился прогон, на каждую
+  непрошедшую строку, иначе один `info` с их числом.
 * `--test` пишет в stderr строку на каждую неудачу,
   `email.tests:4: expected accepted, got rejected at 2: LocalSep has no dot`,
   а затем `7 passed` или `6 passed, 1 failed`.

@@ -1,6 +1,6 @@
 # The Python FA Dispatcher Architecture
 
-Document version: 0.3 (2026-10-28)
+Document version: 0.4 (2026-10-28)
 
 The dispatcher executes the diagrams of deterministic finite automata (FA) at
 run time. The diagrams follow ПРИМС:КА, the FA extension of PNST 984-2024
@@ -275,6 +275,7 @@ fa-run DIAGRAM --text TEXT      a text; "-" reads stdin, the last newline droppe
 fa-run DIAGRAM --tape FILE      a tape file; "-" reads stdin
 fa-run DIAGRAM --test FILE      a tests file
 fa-run DIAGRAM --session        the editor session over stdin and stdout
+       --diagnostics FILE       with --test: the failures as the findings of the editor
        --join                   the output without the spaces between the symbols
        --trace                  the steps on stderr
 ```
@@ -327,17 +328,26 @@ is not shared, so that the dependency stays one way.
 
 ```
  Plugins
-   Finite Automata  >  Run on a Tape...     the session: Plugins > Session F10, F5, F6
-                       Test the Tapes...    a tests file: a finding per failing line,
+   Finite Automata  >  Test the Tapes...    a tests file: a finding per failing line,
                                             on the state where the run stopped
+                       Run on a Tape        the session: Plugins > Session F10, F5, F6
                        (later) Determinize, Minimize, Export the Table...
 ```
 
-The plugin lives in `editor-plugin/` (`plugin.json`, the icons, the
-translations) and is installed into `share/cyberiada-pro/plugins`, as the
-hsm-to-python one. There is no action to check the automaton: the editor
-opens and saves an FA document through the same library, which refuses a
-broken one.
+| Action | Kind | Runs |
+|---|---|---|
+| `test` "Test the Tapes..." | one-shot, `diagnostics`, `exit_ok` 0 and 1 | `python3 -m fad_cli ${document} --test ${param:tests} --diagnostics ${diagnostics}`; the parameter `tests` (a file, per document) starts at `<document>.tests` |
+| `tape` "Run on a Tape" | session | `python3 -m fad_cli ${document} --session` |
+
+The plugin lives in `editor-plugin/` (`plugin.json`, the icons, the Russian
+translation) and is installed into the plugin directory of the editor as
+`fa-dispatcher`, as the hsm-to-python one. A plugin needs a one-shot action,
+so Test the Tapes is that. There is no action to check the automaton: the
+editor opens and saves an FA document through the same library, which
+refuses a broken one.
+
+A run has no clock: Run goes to the verdict at once, and the session offers
+no Pause.
 
 ## Examples
 
@@ -522,9 +532,11 @@ tapes: `dropped` is a rejection, `finished` after `EOF` an acceptance. The
 verdicts and the outputs must agree with the dispatcher's, whose step table
 is computed on its own.
 
-A session test drives `fad_session.py` with a scripted editor, and the
-editor's batch session (`--session-script`, `expect-verdict`) runs the
-plugin on the Mealy, Moore and nested diagrams.
+`test/session_test.py` drives `fad_session.py` with a scripted editor, and
+`test/plugin_test.py` runs the plugin in the editor's batch mode: the
+session script `test/session/decoder.session` (`--session-script`,
+`expect-verdict`) and Test the Tapes (`--dump-plugin`); it is skipped
+without a CyberiadaPro binary.
 
 ## Stages
 
@@ -532,8 +544,8 @@ plugin on the Mealy, Moore and nested diagrams.
 |---|---|
 | 0 (done) | this document, `API.md` and `API-ru.md`: the interface, the tapes, the tests files, the classes |
 | 1 (done) | the reader, the model, the run, the classes, the tapes, `fa-run`, the examples, the tests and the oracle; the output symbols of `libcyberiadaml` for the encoder |
-| 2 | the session and the plugin's Run on a Tape, with the editor test |
-| 3 | Test the Tapes; the packages: pip, Debian, the plugin |
+| 2 (done) | the session, the plugin's Run on a Tape and Test the Tapes, with the editor test |
+| 3 | the packages: pip, Debian, the plugin installed |
 | 4 | Determinize, Minimize, Export the Table (a `replace` output laid out by the editor); the Windows installer |
 
 ## Open questions

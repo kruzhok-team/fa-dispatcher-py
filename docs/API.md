@@ -284,6 +284,7 @@ fa-run DIAGRAM --text TEXT      a text; "-" reads stdin, without its last newlin
 fa-run DIAGRAM --tape FILE      a tape file; "-" reads stdin
 fa-run DIAGRAM --test FILE      a tests file
 fa-run DIAGRAM --session        the editor session over stdin and stdout
+       --diagnostics FILE       with --test: the failures as the findings of the editor
        --join                   the output without spaces between the symbols
        --trace                  the trace records on stderr
 ```
@@ -299,6 +300,9 @@ fa-run DIAGRAM --session        the editor session over stdin and stdout
   JA
   ```
 
+* `--diagnostics` writes the failures of `--test` as the diagnostics file of
+  the editor's plugins: an `error` on the state where the run stopped per
+  failing line, else one `info` with the count.
 * `--test` writes a line per failure to stderr,
   `email.tests:4: expected accepted, got rejected at 2: LocalSep has no dot`,
   and then `7 passed` or `6 passed, 1 failed`.

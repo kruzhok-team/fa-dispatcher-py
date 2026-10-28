@@ -8,6 +8,11 @@ Added:
   transitions, the run of a tape to its verdict and output, the trace;
 - the character classes of a `Classes` component for the texts;
 - `fad_tape`: the tape files and the tests files;
-- `fa-run`, the command line;
+- `fa-run`, the command line; `--diagnostics` writes the failures of the
+  tests as the findings of the editor;
+- `fad_session`: the stream session of the CyberiadaPro editor on stdin and
+  stdout (JSON-RPC 2.0), `fa-run --session`;
+- the editor plugin `fa-dispatcher`: Run on a Tape (the session) and Test the
+  Tapes... (the findings);
 - the examples: the parity of a bit string, an e-mail address, the Morse
   decoder and encoder.
