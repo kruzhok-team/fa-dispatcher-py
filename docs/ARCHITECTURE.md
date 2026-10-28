@@ -1,6 +1,6 @@
 # The Python FA Dispatcher Architecture
 
-Document version: 0.4 (2026-10-28)
+Document version: 0.5 (2026-10-28)
 
 The dispatcher executes the diagrams of deterministic finite automata (FA) at
 run time. The diagrams follow ПРИМС:КА, the FA extension of PNST 984-2024
@@ -96,6 +96,7 @@ The modules are plain files in the repository root, as in hsmd.
 | `fad_tape.py` | The tapes: the symbols, the texts, the tape file and the tests file. |
 | `fad_session.py` | The editor session: the stream logic over stdin and stdout. |
 | `fad_cli.py` | `fa-run`, the command line. |
+| `fad_plugin.py` | `fa-run --install-editor-plugin`: the plugin copied into the user plugin folder of the editor, pinned to the installing Python. |
 
 ## The model
 
@@ -275,6 +276,7 @@ fa-run DIAGRAM --text TEXT      a text; "-" reads stdin, the last newline droppe
 fa-run DIAGRAM --tape FILE      a tape file; "-" reads stdin
 fa-run DIAGRAM --test FILE      a tests file
 fa-run DIAGRAM --session        the editor session over stdin and stdout
+fa-run --install-editor-plugin [DIR]   the plugin into the editor's folder or DIR
        --diagnostics FILE       with --test: the failures as the findings of the editor
        --join                   the output without the spaces between the symbols
        --trace                  the steps on stderr
@@ -545,7 +547,7 @@ without a CyberiadaPro binary.
 | 0 (done) | this document, `API.md` and `API-ru.md`: the interface, the tapes, the tests files, the classes |
 | 1 (done) | the reader, the model, the run, the classes, the tapes, `fa-run`, the examples, the tests and the oracle; the output symbols of `libcyberiadaml` for the encoder |
 | 2 (done) | the session, the plugin's Run on a Tape and Test the Tapes, with the editor test |
-| 3 | the packages: pip, Debian, the plugin installed |
+| 3 (done) | the packages: pip (the plugin as data files), Debian (`python3-fa-dispatcher`, the plugin in the system folder), `--install-editor-plugin` |
 | 4 | Determinize, Minimize, Export the Table (a `replace` output laid out by the editor); the Windows installer |
 
 ## Open questions

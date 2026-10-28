@@ -15,4 +15,8 @@ Added:
 - the editor plugin `fa-dispatcher`: Run on a Tape (the session) and Test the
   Tapes... (the findings);
 - the examples: the parity of a bit string, an e-mail address, the Morse
-  decoder and encoder.
+  decoder and encoder;
+- the packages: pip with the plugin as data files, `fa-run
+  --install-editor-plugin [DIR]` copying it into the editor's folder, and the
+  Debian package `python3-fa-dispatcher` (the plugin in
+  `/usr/share/cyberiada-pro/plugins`, the documentation and the examples).

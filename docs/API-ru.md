@@ -282,6 +282,7 @@ fa-run DIAGRAM --text TEXT      текст; "-" читает stdin без пос
 fa-run DIAGRAM --tape FILE      файл ленты; "-" читает stdin
 fa-run DIAGRAM --test FILE      файл тестов
 fa-run DIAGRAM --session        сессия редактора через stdin и stdout
+fa-run --install-editor-plugin [DIR]   плагин в каталог редактора или в DIR
        --diagnostics FILE       с --test: неудачи как замечания редактора
        --join                   выход без пробелов между символами
        --trace                  записи трассировки в stderr

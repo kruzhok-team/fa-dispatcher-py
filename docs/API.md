@@ -284,6 +284,7 @@ fa-run DIAGRAM --text TEXT      a text; "-" reads stdin, without its last newlin
 fa-run DIAGRAM --tape FILE      a tape file; "-" reads stdin
 fa-run DIAGRAM --test FILE      a tests file
 fa-run DIAGRAM --session        the editor session over stdin and stdout
+fa-run --install-editor-plugin [DIR]   the plugin into the editor's folder or DIR
        --diagnostics FILE       with --test: the failures as the findings of the editor
        --join                   the output without spaces between the symbols
        --trace                  the trace records on stderr

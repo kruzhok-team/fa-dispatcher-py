@@ -30,13 +30,34 @@ table (`examples/README.md`, `README-ru.md` in Russian).
 ## Installation
 
 The dispatcher needs the `CyberiadaML` module: the binding of
-`libcyberiadamlpp-py` with its libraries, or, when it is not installed, the
-pure-Python interface of `cyberiadaml-py`. With pip:
+`libcyberiadamlpp-py` with its libraries (version 1.1.0+, the FA rules),
+each installed by its own README, or, when it is not installed, the
+pure-Python interface of `cyberiadaml-py` 1.8+.
 
+The Debian package - the modules, `fa-run`, the editor plugin in
+`/usr/share/cyberiada-pro/plugins/fa-dispatcher`, the documentation and the
+examples in `/usr/share/doc/python3-fa-dispatcher`:
+
+    cmake -B build && cd build && ctest && cpack -G DEB
+    sudo apt install ./python3-fa-dispatcher_0.1.0_all.deb
+
+`ctest` runs the tests with the Python CMake finds
+(`-DPython3_EXECUTABLE=...` selects another one). The package depends on
+`python3-libcyberiadamlpp` or `python3-cyberiadaml`.
+
+With pip (a virtual environment, the user site, Windows, macOS) nothing is
+built: pip installs cyberiadaml-py with the dispatcher, which uses the
+binding only when it is installed (on Windows before Python 3.10 pip does not
+install cyberiadaml-py, which needs pydantic there; that case takes the
+binding):
+
+    python3 -m venv --system-site-packages venv && . venv/bin/activate
     pip install /path/to/fa-dispatcher-py
+    fa-run --install-editor-plugin
 
-The modules are plain files, so the directory of the repository on the
-Python path works as well: `python3 -m fad_cli` is `fa-run`.
+Check with `fa-run --help`. The modules are plain files, so the directory of
+the repository on the Python path works as well: `python3 -m fad_cli` is
+`fa-run`.
 
 ## Usage
 
@@ -61,12 +82,18 @@ print(result.verdict, result.output)          # accepted ['ODD']
 `editor-plugin` is the plugin of the CyberiadaPro editor, Plugins > Finite
 Automata: Run on a Tape - the automaton step by step on a tape, the editor
 marking the active state and showing the verdict and the output - and Test
-the Tapes... - a tests file, a finding per failing tape. Copy the directory
-as `fa-dispatcher` into the plugin directory of the editor
-(`~/.local/share/Cyberiada/CyberiadaPro/plugins` on Linux) or give the
-editor `--plugin-path` to this repository. The plugin runs `python3 -m
-fad_cli`, so that Python needs the modules of this repository and the
-`CyberiadaML` module.
+the Tapes... - a tests file, a finding per failing tape.
+
+* The Debian package installs it into the system plugin folder; the plugin
+  runs `python3 -m fad_cli` with the packaged modules.
+* `fa-run --install-editor-plugin [DIR]` copies the plugin of a pip
+  installation or of this source tree into the user plugin folder of the
+  editor (`~/.local/share/Cyberiada/CyberiadaPro/plugins` on Linux,
+  `%APPDATA%` on Windows) or into DIR. The copy runs the Python that installed it; from a
+  source tree it also puts the tree on `PYTHONPATH`.
+* `CyberiadaPro --plugin-path /path/to/fa-dispatcher-py` finds it in the
+  source tree without a copy; then `python3` needs the modules and the
+  `CyberiadaML` module.
 
 ## Tests
 
@@ -89,3 +116,4 @@ batch mode of CyberiadaPro (skipped without it). `cmake -B build && cd build
   1.1.0+, with its dependencies) or, when it is not installed, cyberiadaml-py
   (version 1.8.0+), its pure-Python interface
 * hsm-dispatcher-py - optional, the oracle of the tests
+* cmake (version 3.16+) - for the Debian package
