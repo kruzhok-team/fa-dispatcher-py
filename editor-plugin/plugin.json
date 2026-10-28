@@ -1,0 +1,68 @@
+{
+  "api": 1,
+  "id": "fa-dispatcher",
+  "name": "Finite Automata",
+  "version": "0.1.0",
+  "description": "Runs a finite automaton diagram (type/ fa) on a tape: step by step with the marks on the diagram, the verdict and the output, or over a tests file. Needs the fa-dispatcher-py modules with CyberiadaML in the Python the plugin runs with.",
+  "interpreter": "python3",
+  "env": {
+    "PYTHONUTF8": "1"
+  },
+  "parameters": [
+    {
+      "id": "tests",
+      "type": "file",
+      "label": "Tests file",
+      "scope": "document",
+      "default": "${document_dir}/${document_name}.tests",
+      "filter": "Tests (*.tests)",
+      "description": "A tape per line: + accepted, - rejected, => the expected output"
+    }
+  ],
+  "actions": [
+    {
+      "id": "test",
+      "label": "Test the Tapes...",
+      "result": "diagnostics",
+      "save": true,
+      "exit_ok": [
+        0,
+        1
+      ],
+      "icon": "icons/test.svg",
+      "toolbar": true,
+      "description": "Run the tapes of a tests file; a failing tape is a finding on the state where its run stopped",
+      "argv": [
+        "-m",
+        "fad_cli",
+        "${document}",
+        "--test",
+        "${param:tests}",
+        "--diagnostics",
+        "${diagnostics}"
+      ],
+      "parameters": [
+        "tests"
+      ]
+    }
+  ],
+  "session": {
+    "version": 1,
+    "actions": [
+      {
+        "id": "tape",
+        "label": "Run on a Tape",
+        "save": true,
+        "icon": "icons/tape.svg",
+        "toolbar": true,
+        "description": "Run the automaton on a tape one symbol at a time; the editor marks the active state and the fired transition and shows the verdict and the output",
+        "argv": [
+          "-m",
+          "fad_cli",
+          "${document}",
+          "--session"
+        ]
+      }
+    ]
+  }
+}

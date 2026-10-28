@@ -24,4 +24,4 @@ dependencies = ["cyberiadaml-py>=1.8; python_version >= '3.10' or sys_platform !
 fa-run = "fad_cli:main"
 
 [tool.setuptools]
-py-modules = ["fad", "fad_model", "fad_reader", "fad_tape", "fad_cli"]
+py-modules = ["fad", "fad_model", "fad_reader", "fad_tape", "fad_cli", "fad_session"]

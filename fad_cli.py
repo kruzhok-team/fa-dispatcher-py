@@ -24,6 +24,7 @@
 stderr, so one automaton pipes into another."""
 
 import argparse
+import json
 import sys
 
 import fad
@@ -53,14 +54,31 @@ def _trace(record):
     print(' '.join(str(item) for item in record), file=sys.stderr)
 
 
-def _test(dispatcher, path):
-    tests = fad_tape.read_tests(_read(path))
+def _write_diagnostics(path, diagnostics):
+    """The findings of the editor (docs/API.md, The command line)."""
+    with open(path, 'w', encoding='utf-8') as target:
+        json.dump(diagnostics, target, ensure_ascii=False, indent=1)
+
+
+def _test(dispatcher, path, diagnostics=None):
+    try:
+        tests = fad_tape.read_tests(_read(path))
+    except fad.TapeError as e:
+        if diagnostics:
+            _write_diagnostics(diagnostics, [{'severity': 'error', 'message': '{}: {}'.format(
+                path, e)}])
+        raise
     failures = fad_tape.check(dispatcher, tests)
     for failure in failures:
         print('{}:{}: {}'.format(path, failure.test.line, failure.message), file=sys.stderr)
     passed = len(tests) - len(failures)
-    print('{} passed'.format(passed) + (', {} failed'.format(len(failures)) if failures else ''),
-          file=sys.stderr)
+    summary = '{} passed'.format(passed) + (', {} failed'.format(len(failures)) if failures else '')
+    print(summary, file=sys.stderr)
+    if diagnostics:
+        findings = [{'severity': 'error', 'element': failure.result.state,
+                     'message': 'line {}: {}'.format(failure.test.line, failure.message)}
+                    for failure in failures]
+        _write_diagnostics(diagnostics, findings or [{'severity': 'info', 'message': summary}])
     return EXIT_REJECTED if failures else EXIT_ACCEPTED
 
 
@@ -76,6 +94,8 @@ def main(argv=None):
     source.add_argument('--test', help='a tests file')
     source.add_argument('--session', action='store_true',
                         help='serve the editor session over stdin and stdout')
+    parser.add_argument('--diagnostics', metavar='FILE',
+                        help='with --test: the failures as the findings of the editor')
     parser.add_argument('--join', action='store_true',
                         help='the output without spaces between the symbols')
     parser.add_argument('--trace', action='store_true', help='the trace records on stderr')
@@ -88,7 +108,7 @@ def main(argv=None):
             import fad_session  # pylint: disable=import-outside-toplevel
             return fad_session.serve(dispatcher)
         if args.test:
-            return _test(dispatcher, args.test)
+            return _test(dispatcher, args.test, args.diagnostics)
         if args.text is not None:
             text = _drop_newline(_read(STDIN)) if args.text == STDIN else args.text
             tape = dispatcher.classify(text)
