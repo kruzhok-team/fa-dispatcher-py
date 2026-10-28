@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fa-dispatcher-py"
+version = "0.1.0"
+description = "The run-time interpreter of the CyberiadaML finite automaton diagrams"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{name = "Alexey Fedoseev", email = "aleksey@fedoseev.net"}]
+classifiers = [
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+    "Programming Language :: Python :: 3",
+]
+
+# the CyberiadaML module: the binding of libcyberiadamlpp-py (its own build
+# or package) when installed, else the pure-Python interface of cyberiadaml-py
+# not on Windows before Python 3.10: pydantic has no build there and the
+# interface does not import without it; the binding serves that case
+dependencies = ["cyberiadaml-py>=1.8; python_version >= '3.10' or sys_platform != 'win32'"]
+
+[project.scripts]
+fa-run = "fad_cli:main"
+
+[tool.setuptools]
+py-modules = ["fad", "fad_model", "fad_reader", "fad_tape", "fad_cli"]

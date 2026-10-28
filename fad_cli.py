@@ -1,0 +1,109 @@
+# -----------------------------------------------------------------------------
+#  The Python FA dispatcher
+#
+#  fa-run: the command line
+#
+#  Copyright (C) 2026 Alexey Fedoseev <aleksey@fedoseev.net>
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU Lesser General Public
+#  License as published by the Free Software Foundation; either
+#  version 3 of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#  Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with this program. If not, see https://www.gnu.org/licenses/
+#
+#  -----------------------------------------------------------------------------
+
+"""fa-run (docs/API.md, The command line): the output on stdout, the verdict on
+stderr, so one automaton pipes into another."""
+
+import argparse
+import sys
+
+import fad
+import fad_tape
+
+EXIT_ACCEPTED = 0
+EXIT_REJECTED = 1
+EXIT_ERROR = 2
+STDIN = '-'
+
+
+def _read(path):
+    if path == STDIN:
+        return sys.stdin.read()
+    with open(path, encoding='utf-8') as source:
+        return source.read()
+
+
+def _drop_newline(text):
+    """A text from stdin without its last newline."""
+    if text.endswith('\r\n'):
+        return text[:-2]
+    return text[:-1] if text.endswith('\n') else text
+
+
+def _trace(record):
+    print(' '.join(str(item) for item in record), file=sys.stderr)
+
+
+def _test(dispatcher, path):
+    tests = fad_tape.read_tests(_read(path))
+    failures = fad_tape.check(dispatcher, tests)
+    for failure in failures:
+        print('{}:{}: {}'.format(path, failure.test.line, failure.message), file=sys.stderr)
+    passed = len(tests) - len(failures)
+    print('{} passed'.format(passed) + (', {} failed'.format(len(failures)) if failures else ''),
+          file=sys.stderr)
+    return EXIT_REJECTED if failures else EXIT_ACCEPTED
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        prog='fa-run', description='Run a finite automaton diagram (type/ fa) on a tape.')
+    parser.add_argument('diagram', help='the CyberiadaML document')
+    parser.add_argument('symbols', nargs='*', help='a tape of symbols')
+    source = parser.add_mutually_exclusive_group()
+    source.add_argument('--text', help='a text, one symbol per character through the classes; '
+                        '"-" reads stdin')
+    source.add_argument('--tape', help='a tape file; "-" reads stdin')
+    source.add_argument('--test', help='a tests file')
+    source.add_argument('--session', action='store_true',
+                        help='serve the editor session over stdin and stdout')
+    parser.add_argument('--join', action='store_true',
+                        help='the output without spaces between the symbols')
+    parser.add_argument('--trace', action='store_true', help='the trace records on stderr')
+    args = parser.parse_args(argv)
+    if args.symbols and (args.text is not None or args.tape or args.test or args.session):
+        parser.error('the symbols go without --text, --tape, --test and --session')
+    try:
+        dispatcher = fad.Dispatcher(args.diagram, trace=_trace if args.trace else None)
+        if args.session:
+            import fad_session  # pylint: disable=import-outside-toplevel
+            return fad_session.serve(dispatcher)
+        if args.test:
+            return _test(dispatcher, args.test)
+        if args.text is not None:
+            text = _drop_newline(_read(STDIN)) if args.text == STDIN else args.text
+            tape = dispatcher.classify(text)
+        elif args.tape:
+            tape = fad_tape.symbols(fad_tape.read(_read(args.tape)), dispatcher.classify)
+        else:
+            tape = args.symbols
+    except (fad.FAError, OSError) as e:
+        print('fa-run: {}'.format(e), file=sys.stderr)
+        return EXIT_ERROR
+    result = dispatcher.run(tape)
+    print(('' if args.join else ' ').join(result.output))
+    print(result.message, file=sys.stderr)
+    return EXIT_ACCEPTED if result.verdict == fad.ACCEPTED else EXIT_REJECTED
+
+
+if __name__ == '__main__':
+    sys.exit(main())
