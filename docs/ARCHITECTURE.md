@@ -1,10 +1,10 @@
 # The Python FA Dispatcher Architecture
 
-Document version: 0.6 (2026-10-28)
+Document version: 0.7 (2026-10-28)
 
 The dispatcher executes the diagrams of deterministic finite automata (FA) at
 run time. The diagrams follow ПРИМС:КА, the FA extension of PNST 984-2024
-(`cyberiadaml-compat-tests/docs/FA-extension.md` 0.3), and are stored in the
+(`cyberiadaml-compat-tests/docs/FA-extension.md` 0.4), and are stored in the
 CyberiadaML-GraphML format (CGML, PNST 1044-2025) with `type/ fa` in the
 metadata. The dispatcher reads a tape, one symbol per step, sends `EOF` after
 the last one and gives the verdict - the tape is accepted or rejected - and
@@ -111,9 +111,9 @@ The reader walks the state machine as `hsmd_reader.py` does
   the same for the output - kept for the reasons of the rejections;
 * the classes of the `Classes` component.
 
-The binding refuses a broken FA document on every open. cyberiadaml-py
-1.8.0 refuses it in its strict mode only, so on that route the reader opens
-a `type/ fa` document with `strict=True`.
+The libraries accept a broken FA document in their lenient mode only, as
+an editor's draft (FA-extension 0.4 §5), so the reader opens a `type/ fa`
+document strictly on both routes and an executor never runs a draft.
 
 From the elements the model computes the table of the steps: for every
 simple state and every symbol read by a transition, the edge the step takes.
@@ -345,8 +345,7 @@ The plugin lives in `editor-plugin/` (`plugin.json`, the icons, the Russian
 translation) and is installed into the plugin directory of the editor as
 `fa-dispatcher`, as the hsm-to-python one. A plugin needs a one-shot action,
 so Test the Tapes is that. There is no action to check the automaton: the
-editor opens and saves an FA document through the same library, which
-refuses a broken one.
+editor lists the violations of a draft itself (Diagram > Check the Diagram).
 
 A run has no clock: Run goes to the verdict at once, and the session offers
 no Pause.
@@ -553,8 +552,6 @@ without a CyberiadaPro binary.
 
 ## Open questions
 
-* cyberiadaml-py refuses a broken FA document in its lenient mode too, as
-  the binding does, so that the reader needs no strict open on that route;
 * the position of the rejection in a tests file (`- 1 0 2 @ 2`);
 * the digits of the Morse tree (five symbols; `..--`, `---.` and `----`
   become states without a `GAP` output).
