@@ -94,8 +94,8 @@ the Tapes... - a tests file, a finding per failing tape.
 * `fa-run --install-editor-plugin [DIR]` copies the plugin of a pip
   installation or of this source tree into the user plugin folder of the
   editor (`~/.local/share/Cyberiada/CyberiadaPro/plugins` on Linux,
-  `%APPDATA%` on Windows) or into DIR. The copy runs the Python that installed it; from a
-  source tree it also puts the tree on `PYTHONPATH`.
+  `%APPDATA%` on Windows) or into DIR. The copy runs the Python that
+  installed it; from a source tree it also puts the tree on `PYTHONPATH`.
 * `CyberiadaPro --plugin-path /path/to/fa-dispatcher-py` finds it in the
   source tree without a copy; then `python3` needs the modules and the
   `CyberiadaML` module.
