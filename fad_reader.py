@@ -65,11 +65,6 @@ def _lines(body):
     return [line.strip() for line in body.split('\n') if line.strip()]
 
 
-def _is_cml():
-    """cyberiadaml-py refuses a broken FA document in its strict mode only."""
-    return CyberiadaML.__name__.startswith('cyberiadaml_py')
-
-
 def _is_fa(doc):
     if hasattr(doc, 'is_fa'):
         return doc.is_fa()
@@ -80,7 +75,8 @@ def _open(path):
     doc = CyberiadaML.LocalDocument()
     try:
         doc.open(path, CyberiadaML.formatDetect, CyberiadaML.geometryFormatNone)
-        if _is_fa(doc) and _is_cml():
+        # the libraries take a broken automaton as a draft unless they read strictly
+        if _is_fa(doc):
             doc = CyberiadaML.LocalDocument()
             doc.open(path, CyberiadaML.formatDetect, CyberiadaML.geometryFormatNone, strict=True)
     except Exception as e:  # pylint: disable=broad-except
