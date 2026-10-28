@@ -69,9 +69,9 @@ parameter `type/ fa` in `CGML_META` (`FA-extension.md`, 5). The elements:
 * An input symbol has the shape of an event name: letters, digits and `_`,
   with spaces and dots inside (`DOOR_OPEN`, `0`, `letter`). Other characters
   reach the automaton through the classes.
-* An output symbol is one line without spaces. Until libcyberiadaml takes
-  the other shapes, it has the shape of an event name too (`.---` waits for
-  that change).
+* An output symbol is one line: `ODD`, `.---`, `/`. libcyberiadaml (1.1.0)
+  refuses one that is an event name with a slash (`c/`): it reads a second
+  event block so.
 
 The library checks these rules when it opens the document; a broken
 document is a `DocumentError`.
@@ -110,13 +110,13 @@ is a `DocumentError`. Nothing runs before `start()` or `run()`.
 | Member | Returns | Does |
 |---|---|---|
 | `start()` | the `Step` of the start | begins a new run: follows the initial transitions to a simple state and writes its output |
-| `feed(symbol)` | a `Step` | reads one symbol; without a transition the run is rejected |
+| `feed(symbol)` | a `Step` | reads one symbol; without a transition the run is rejected; `feed(fad.EOF)` is `end()` |
 | `end()` | the `Step` of `EOF` | ends the tape: accepted when `EOF` reaches the final state, else rejected |
 | `run(tape)` | a `Result` | `start()`, `feed()` for every symbol up to a rejection, `end()` |
 | `classify(text)` | a list of symbols | the characters of the text through the classes |
 | `state()` | a state id | the active simple state; after the verdict, the state where the run stopped |
 | `states()` | a list of state ids | the active state and the composite states around it, the outermost first |
-| `symbols()` | a list of symbols | the symbols the active state reads, its own and the inherited ones, in the document order, `EOF` aside |
+| `symbols()` | a list of symbols | the symbols the active state reads, its own first, then the inherited ones, each in the document order, `EOF` aside |
 | `accepting()` | `bool` | whether `end()` would accept now |
 | `position` | `int` | the symbols read by the run |
 | `output` | a list of symbols | the output of the run so far |
@@ -187,7 +187,8 @@ takes as its source; several dispatchers share one automaton.
 | `classes` | a list of `(symbol, pattern)` in the document order |
 | `accepting` | the set of the accepting states |
 | `edge(state, symbol)` | the `Edge` of the step, or `None`: `transition`, `exited`, `entered`, `output`, `fired` |
-| `symbols(state)` | the symbols the state reads, its own and the inherited ones |
+| `symbols(state)` | the symbols the state reads, its own first, then the inherited ones |
+| `events()` | the symbols of an `FA_INPUT` list, else those of the transitions |
 | `classify(text)` | as `Dispatcher.classify()` |
 | `label(id)` | the name of the element, or its id |
 
@@ -225,7 +226,8 @@ at/ @
 
 * A character becomes the symbol of the first class that matches it, in
   the document order, or stays itself.
-* With `FA_INPUT` or `FA_INPUT_RE` declared, every class symbol is in it.
+* With an `FA_INPUT` list declared, every class symbol is in it (the
+  patterns of `FA_INPUT_RE` are not matched).
 * A document has one `Classes` component at most; without one, a character
   is a symbol of its own.
 * The classes apply to texts only; a tape of symbols is read as it is.
@@ -343,7 +345,8 @@ driven session with the stream logic.
  "end": "EOF", "stream": true, "save": true, "verdict": true, "output": true}
 ```
 
-`events` are the symbols of `FA_INPUT`, or of the transitions without it.
+`events` are the `events()` of the automaton: the symbols of an `FA_INPUT`
+list, or of the transitions.
 
 | Unit, message | The session does |
 |---|---|

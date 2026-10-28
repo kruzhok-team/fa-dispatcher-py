@@ -23,9 +23,55 @@ The documentation is located in the `docs` directory and contains:
   model, the run, the tapes, the character classes, the session of the editor
   and the examples
 
+The examples - the parity of a bit string, an e-mail address, the Morse
+decoder and encoder - are in `examples` with their tests and the Morse
+table (`examples/README.md`, `README-ru.md` in Russian).
+
+## Installation
+
+The dispatcher needs the `CyberiadaML` module: the binding of
+`libcyberiadamlpp-py` with its libraries, or, when it is not installed, the
+pure-Python interface of `cyberiadaml-py`. With pip:
+
+    pip install /path/to/fa-dispatcher-py
+
+The modules are plain files, so the directory of the repository on the
+Python path works as well: `python3 -m fad_cli` is `fa-run`.
+
+## Usage
+
+    fa-run examples/parity-mealy.graphml 1 0 1 1
+    fa-run examples/email.graphml --text 'j.doe@mail.ru'
+    fa-run examples/morse-encoder.graphml --text JA | fa-run examples/morse-decoder.graphml --text - --join
+    fa-run examples/email.graphml --test examples/email.tests
+
+The output symbols go to stdout, the verdict to stderr; the exit code is 0
+for an accepted tape, 1 for a rejected one, 2 for an error.
+
+```python
+import fad
+
+dispatcher = fad.Dispatcher('examples/parity-mealy.graphml')
+result = dispatcher.run(['1', '0', '1', '1'])
+print(result.verdict, result.output)          # accepted ['ODD']
+```
+
+## Tests
+
+    cd test
+    python3 run.py                  # with the binding, or cyberiadaml-py without it
+    FAD_BACKEND=cml python3 run.py  # on cyberiadaml-py beside an installed binding
+
+The tests run the tests files of the examples and of the compat-tests FA
+diagrams (when `cyberiadaml-compat-tests` is found beside this repository),
+check that its `X-FA` negatives are refused, and run the same tapes on
+`hsm-dispatcher-py` as an oracle when it is found. `cmake -B build && cd
+build && ctest` runs both backends. `pylint.sh` runs the linter.
+
 ## Requirements
 
 * python3 (version 3.8+)
 * the `CyberiadaML` module with the FA rules: libcyberiadamlpp-py (version
   1.1.0+, with its dependencies) or, when it is not installed, cyberiadaml-py
   (version 1.8.0+), its pure-Python interface
+* hsm-dispatcher-py - optional, the oracle of the tests

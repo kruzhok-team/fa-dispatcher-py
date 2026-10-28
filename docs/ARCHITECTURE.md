@@ -1,6 +1,6 @@
 # The Python FA Dispatcher Architecture
 
-Document version: 0.2 (2026-10-28)
+Document version: 0.3 (2026-10-28)
 
 The dispatcher executes the diagrams of deterministic finite automata (FA) at
 run time. The diagrams follow ПРИМС:КА, the FA extension of PNST 984-2024
@@ -198,7 +198,7 @@ at/ @
 * A character of a text becomes the symbol of the first class that matches
   it, in the document order, or stays itself: `j doe` gives `letter`, ` `,
   `letter`, ... and the space is rejected unless a transition reads it.
-* With `FA_INPUT[_RE]` declared, every class symbol is in it.
+* With an `FA_INPUT` list declared, every class symbol is in it.
 * A document has at most one `Classes` component. Without one, a character
   of a text is a symbol of its own (`"1011"` is `1 0 1 1`).
 
@@ -488,10 +488,9 @@ The tests of the pair: `decode(encode(w)) == w` for a word and
 Arduino course: the button machine (a Timer: a short press `.`, a long one
 `-`, a pause a space) writes the Morse text, and the decoder reads it.
 
-The encoder needs a change of `libcyberiadaml` first: the C rules of FA
-documents take an output symbol in the shape of an event name only
-(`cyb_fa.c`), which refuses `.---`. cyberiadaml-py takes it, and FA 4
-escapes `.` and `-` for such symbols; the input symbols keep the shape.
+libcyberiadaml 1.1.0 takes such an output symbol: one line of any
+characters, as in cyberiadaml-py and as FA 4 escapes `.` and `-` for them;
+the input symbols keep the shape of an event name.
 
 ### The conformance diagrams
 
@@ -508,13 +507,15 @@ The `X-FA-*` negatives are refused when they are loaded.
 
 ## Testing
 
-`test/run.py` runs the tests files of `examples/` and `test/` against their
-diagrams, the compat-tests FA diagrams when that repository is found beside
-this one, and the refusal of its negatives; `FAD_BACKEND=cml` runs them on
-cyberiadaml-py beside an installed binding, as `HSMD_BACKEND` does for hsmd.
-`ctest` runs both.
+`test/run.py` runs the tests files of `examples/` and of `test/compat/`
+against their diagrams (the compat-tests FA diagrams when that repository is
+found beside this one), the refusal of its negatives, the parts and
+`fa-run`; `FAD_BACKEND=cml` runs them on cyberiadaml-py beside an installed
+binding, as `HSMD_BACKEND` does for hsmd. `ctest` runs both, the second
+skipped without cyberiadaml-py.
 
-hsmd is the oracle of the semantics. When it is found, every diagram is built
+hsmd is the oracle of the semantics. When it is found (installed or beside
+this repository), every diagram is built
 as an `hsmd.Machine` (`hsmd_build.py`) from the elements the reader read - the
 outputs as functions that append the symbol to a list - and runs the same
 tapes: `dropped` is a rejection, `finished` after `EOF` an acceptance. The
@@ -529,8 +530,8 @@ plugin on the Mealy, Moore and nested diagrams.
 
 | Stage | Contents |
 |---|---|
-| 0 | this document, `API.md` and `API-ru.md`: the interface, the tapes, the tests files, the classes |
-| 1 | the reader, the model, the run, the classes, the tapes, `fa-run`, the examples, the tests and the oracle; the output symbols of `libcyberiadaml` for the encoder |
+| 0 (done) | this document, `API.md` and `API-ru.md`: the interface, the tapes, the tests files, the classes |
+| 1 (done) | the reader, the model, the run, the classes, the tapes, `fa-run`, the examples, the tests and the oracle; the output symbols of `libcyberiadaml` for the encoder |
 | 2 | the session and the plugin's Run on a Tape, with the editor test |
 | 3 | Test the Tapes; the packages: pip, Debian, the plugin |
 | 4 | Determinize, Minimize, Export the Table (a `replace` output laid out by the editor); the Windows installer |
