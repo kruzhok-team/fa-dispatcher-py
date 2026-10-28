@@ -1,6 +1,6 @@
 # The Python FA Dispatcher Architecture
 
-Document version: 0.5 (2026-10-28)
+Document version: 0.6 (2026-10-28)
 
 The dispatcher executes the diagrams of deterministic finite automata (FA) at
 run time. The diagrams follow ПРИМС:КА, the FA extension of PNST 984-2024
@@ -548,7 +548,8 @@ without a CyberiadaPro binary.
 | 1 (done) | the reader, the model, the run, the classes, the tapes, `fa-run`, the examples, the tests and the oracle; the output symbols of `libcyberiadaml` for the encoder |
 | 2 (done) | the session, the plugin's Run on a Tape and Test the Tapes, with the editor test |
 | 3 (done) | the packages: pip (the plugin as data files), Debian (`python3-fa-dispatcher`, the plugin in the system folder), `--install-editor-plugin` |
-| 4 | Determinize, Minimize, Export the Table (a `replace` output laid out by the editor); the Windows installer |
+| 4 (done) | the Windows installer: the CyberiadaPro setup installs the package with its Python plugins and binds the plugin (`-m fad_cli --install-editor-plugin`); its plugin check runs Test the Tapes on the Morse decoder |
+| 5 | Determinize, Minimize, Export the Table (a `replace` output laid out by the editor) |
 
 ## Open questions
 

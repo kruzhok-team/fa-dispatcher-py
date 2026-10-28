@@ -59,6 +59,11 @@ Check with `fa-run --help`. The modules are plain files, so the directory of
 the repository on the Python path works as well: `python3 -m fad_cli` is
 `fa-run`.
 
+On Windows the CyberiadaPro installer (the editor's
+`packaging/build-windows-installer.sh`) installs the package with its Python
+plugins component - into a Python 3.10-3.14 on Windows 10 and newer, a Python
+3.8 on Windows 7 SP1-8.1 - and binds the plugin to that Python.
+
 ## Usage
 
     fa-run examples/parity-mealy.graphml 1 0 1 1

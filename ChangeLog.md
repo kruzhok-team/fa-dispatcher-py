@@ -19,4 +19,6 @@ Added:
 - the packages: pip with the plugin as data files, `fa-run
   --install-editor-plugin [DIR]` copying it into the editor's folder, and the
   Debian package `python3-fa-dispatcher` (the plugin in
-  `/usr/share/cyberiada-pro/plugins`, the documentation and the examples).
+  `/usr/share/cyberiada-pro/plugins`, the documentation and the examples);
+- Windows: the CyberiadaPro installer installs the package and binds the plugin
+  (Python 3.10-3.14 on Windows 10+, Python 3.8 on Windows 7 SP1-8.1).
