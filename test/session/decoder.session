@@ -1,0 +1,15 @@
+# the decoder on a text tape: a step, the marks, a run to the verdict, a restart
+expect-active Ready
+expect-fired init init-Ready
+input test/session/ja.tape
+step
+expect-active E
+expect-fired Ready-E
+run
+wait finished
+expect-status finished
+expect-verdict accepted
+expect-active fin
+restart
+expect-active Ready
+stop

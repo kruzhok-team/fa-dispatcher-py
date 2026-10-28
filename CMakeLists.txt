@@ -15,5 +15,12 @@ if(Python3_FOUND)
   add_test(NAME dispatcher-cml
            COMMAND ${CMAKE_COMMAND} -E env FAD_BACKEND=cml ${Python3_EXECUTABLE} -B run.py
            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test)
-  set_tests_properties(dispatcher-cml PROPERTIES SKIP_RETURN_CODE 77)
+  add_test(NAME session
+           COMMAND ${Python3_EXECUTABLE} -B session_test.py
+           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test)
+  # the editor plugin through CyberiadaPro; skipped without the editor
+  add_test(NAME plugin
+           COMMAND ${Python3_EXECUTABLE} -B plugin_test.py
+           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test)
+  set_tests_properties(dispatcher-cml plugin PROPERTIES SKIP_RETURN_CODE 77)
 endif()
