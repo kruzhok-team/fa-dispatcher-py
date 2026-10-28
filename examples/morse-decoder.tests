@@ -1,0 +1,9 @@
+# Morse text: a space between the letters, " / " between the words
++ ".--- .-" => J A
++ "... --- ... / .... . .-.. .--." => S O S / H E L P
++ "..." => S
++ "" =>
++ DOT DOT DOT GAP DASH DASH DASH GAP DOT DOT DOT => S O S
+- ".-.- .--"
+- "....."
+- "... x"

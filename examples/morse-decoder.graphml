@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <data key="gFormat">Cyberiada-GraphML-1.0</data>
+  <key id="gFormat" for="graphml" attr.name="format" attr.type="string"/>
+  <key id="dName" for="graph" attr.name="name" attr.type="string"/>
+  <key id="dName" for="node" attr.name="name" attr.type="string"/>
+  <key id="dStateMachine" for="graph" attr.name="stateMachine" attr.type="string"/>
+  <key id="dRegion" for="graph" attr.name="region" attr.type="string"/>
+  <key id="dGeometry" for="graph" attr.name="geometry"/>
+  <key id="dGeometry" for="node" attr.name="geometry"/>
+  <key id="dGeometry" for="edge" attr.name="geometry"/>
+  <key id="dSourcePoint" for="edge" attr.name="sourcePoint"/>
+  <key id="dTargetPoint" for="edge" attr.name="targetPoint"/>
+  <key id="dLabelGeometry" for="edge" attr.name="labelGeometry"/>
+  <key id="dNote" for="node" attr.name="note" attr.type="string"/>
+  <key id="dVertex" for="node" attr.name="vertex" attr.type="string"/>
+  <key id="dData" for="node" attr.name="data" attr.type="string"/>
+  <key id="dData" for="edge" attr.name="data" attr.type="string"/>
+  <graph id="sm" edgedefault="directed">
+    <data key="dStateMachine"/>
+    <data key="dName">Morse decoder</data>
+    <node id="nMeta">
+      <data key="dNote">formal</data>
+      <data key="dName">CGML_META</data>
+      <data key="dData">standardVersion/ 1.0
+
+type/ fa</data>
+    </node>
+    <node id="c1">
+      <data key="dNote">formal</data>
+      <data key="dName">CGML_COMPONENT chars</data>
+      <data key="dData">type/ Classes
+
+DOT/ \.
+
+DASH/ \-
+
+GAP/ [ ]
+
+WORD/ /</data>
+      <data key="dGeometry">
+        <rect x="0" y="-260" width="150" height="216"/>
+      </data>
+    </node>
+    <node id="c2">
+      <data key="dNote">formal</data>
+      <data key="dName">FA_INPUT</data>
+      <data key="dData">DOT
+DASH
+GAP
+WORD</data>
+      <data key="dGeometry">
+        <rect x="170" y="-260" width="150" height="116"/>
+      </data>
+    </node>
+    <node id="c3">
+      <data key="dNote">formal</data>
+      <data key="dName">FA_OUTPUT_RE</data>
+      <data key="dData">[A-Z]
+/</data>
+      <data key="dGeometry">
+        <rect x="340" y="-260" width="150" height="76"/>
+      </data>
+    </node>
+    <node id="init">
+      <data key="dVertex">initial</data>
+      <data key="dGeometry">
+        <point x="560" y="25"/>
+      </data>
+    </node>
+    <node id="Ready">
+      <data key="dName">Ready</data>
+      <data key="dGeometry">
+        <rect x="600" y="0" width="80" height="50"/>
+      </data>
+    </node>
+    <node id="E">
+      <data key="dName">E</data>
+      <data key="dGeometry">
+        <rect x="298" y="140" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="I">
+      <data key="dName">I</data>
+      <data key="dGeometry">
+        <rect x="138" y="280" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="S">
+      <data key="dName">S</data>
+      <data key="dGeometry">
+        <rect x="58" y="420" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="H">
+      <data key="dName">H</data>
+      <data key="dGeometry">
+        <rect x="18" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="V">
+      <data key="dName">V</data>
+      <data key="dGeometry">
+        <rect x="98" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="U">
+      <data key="dName">U</data>
+      <data key="dGeometry">
+        <rect x="218" y="420" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="F">
+      <data key="dName">F</data>
+      <data key="dGeometry">
+        <rect x="178" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="A">
+      <data key="dName">A</data>
+      <data key="dGeometry">
+        <rect x="458" y="280" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="R">
+      <data key="dName">R</data>
+      <data key="dGeometry">
+        <rect x="378" y="420" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="L">
+      <data key="dName">L</data>
+      <data key="dGeometry">
+        <rect x="338" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="W">
+      <data key="dName">W</data>
+      <data key="dGeometry">
+        <rect x="538" y="420" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="P">
+      <data key="dName">P</data>
+      <data key="dGeometry">
+        <rect x="498" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="J">
+      <data key="dName">J</data>
+      <data key="dGeometry">
+        <rect x="578" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="T">
+      <data key="dName">T</data>
+      <data key="dGeometry">
+        <rect x="938" y="140" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="N">
+      <data key="dName">N</data>
+      <data key="dGeometry">
+        <rect x="778" y="280" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="D">
+      <data key="dName">D</data>
+      <data key="dGeometry">
+        <rect x="698" y="420" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="B">
+      <data key="dName">B</data>
+      <data key="dGeometry">
+        <rect x="658" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="X">
+      <data key="dName">X</data>
+      <data key="dGeometry">
+        <rect x="738" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="K">
+      <data key="dName">K</data>
+      <data key="dGeometry">
+        <rect x="858" y="420" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="C">
+      <data key="dName">C</data>
+      <data key="dGeometry">
+        <rect x="818" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="Y">
+      <data key="dName">Y</data>
+      <data key="dGeometry">
+        <rect x="898" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="M">
+      <data key="dName">M</data>
+      <data key="dGeometry">
+        <rect x="1098" y="280" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="G">
+      <data key="dName">G</data>
+      <data key="dGeometry">
+        <rect x="1018" y="420" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="Z">
+      <data key="dName">Z</data>
+      <data key="dGeometry">
+        <rect x="978" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="Q">
+      <data key="dName">Q</data>
+      <data key="dGeometry">
+        <rect x="1058" y="560" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="O">
+      <data key="dName">O</data>
+      <data key="dGeometry">
+        <rect x="1178" y="420" width="44" height="40"/>
+      </data>
+    </node>
+    <node id="fin">
+      <data key="dVertex">final</data>
+      <data key="dGeometry">
+        <point x="640" y="812"/>
+      </data>
+    </node>
+    <edge id="init-Ready" source="init" target="Ready"/>
+    <edge id="Ready-E" source="Ready" target="E">
+      <data key="dData">DOT/</data>
+      <data key="dGeometry">
+        <point x="-130.9" y="66.7"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="0.0" y="34.8"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="44.0" y="6.2"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-130.9" y="66.7"/>
+      </data>
+    </edge>
+    <edge id="E-I" source="E" target="I">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="I-S" source="I" target="S">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="S-H" source="S" target="H">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="S-V" source="S" target="V">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="I-U" source="I" target="U">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="U-F" source="U" target="F">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="E-A" source="E" target="A">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="A-R" source="A" target="R">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="R-L" source="R" target="L">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="A-W" source="A" target="W">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="W-P" source="W" target="P">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="W-J" source="W" target="J">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="Ready-T" source="Ready" target="T">
+      <data key="dData">DASH/</data>
+      <data key="dGeometry">
+        <point x="210.9" y="66.7"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="80.0" y="34.8"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="0.0" y="6.2"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="210.9" y="66.7"/>
+      </data>
+    </edge>
+    <edge id="T-N" source="T" target="N">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="N-D" source="N" target="D">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="D-B" source="D" target="B">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="D-X" source="D" target="X">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="N-K" source="N" target="K">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="K-C" source="K" target="C">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="K-Y" source="K" target="Y">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="T-M" source="T" target="M">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="M-G" source="M" target="G">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="G-Z" source="G" target="Z">
+      <data key="dData">DOT/</data>
+    </edge>
+    <edge id="G-Q" source="G" target="Q">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="M-O" source="M" target="O">
+      <data key="dData">DASH/</data>
+    </edge>
+    <edge id="E-Ready" source="E" target="Ready">
+      <data key="dData">GAP/
+E</data>
+      <data key="dGeometry">
+        <point x="192.9" y="-21.7"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="44.0" y="14.6"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="0.0" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="192.9" y="-21.7"/>
+      </data>
+    </edge>
+    <edge id="E-fin" source="E" target="fin">
+      <data key="dData">EOF/
+E</data>
+      <data key="dSourcePoint">
+        <point x="31.8" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-4.4" y="-9.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="46.8" y="70.5"/>
+      </data>
+    </edge>
+    <edge id="I-Ready" source="I" target="Ready">
+      <data key="dData">GAP/
+I</data>
+      <data key="dSourcePoint">
+        <point x="44.0" y="7.4"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="0.0" y="47.9"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="73.5" y="-9.5"/>
+      </data>
+    </edge>
+    <edge id="I-fin" source="I" target="fin">
+      <data key="dData">EOF/
+I</data>
+      <data key="dSourcePoint">
+        <point x="40.8" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-6.8" y="-7.3"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="64.0" y="64.8"/>
+      </data>
+    </edge>
+    <edge id="S-Ready" source="S" target="Ready">
+      <data key="dData">GAP/
+S</data>
+      <data key="dSourcePoint">
+        <point x="44.0" y="3.7"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="6.3" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="71.3" y="-16.5"/>
+      </data>
+    </edge>
+    <edge id="S-fin" source="S" target="fin">
+      <data key="dData">EOF/
+S</data>
+      <data key="dSourcePoint">
+        <point x="44.0" y="34.6"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-8.3" y="-5.5"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="72.3" y="53.4"/>
+      </data>
+    </edge>
+    <edge id="H-Ready" source="H" target="Ready">
+      <data key="dData">GAP/
+H</data>
+      <data key="dSourcePoint">
+        <point x="43.6" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="13.0" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="68.6" y="-23.1"/>
+      </data>
+    </edge>
+    <edge id="H-fin" source="H" target="fin">
+      <data key="dData">EOF/
+H</data>
+      <data key="dSourcePoint">
+        <point x="44.0" y="28.5"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-9.3" y="-3.6"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="75.7" y="40.8"/>
+      </data>
+    </edge>
+    <edge id="V-Ready" source="V" target="Ready">
+      <data key="dData">GAP/
+V</data>
+      <data key="dSourcePoint">
+        <point x="40.7" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="16.6" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="64.0" y="-24.8"/>
+      </data>
+    </edge>
+    <edge id="V-fin" source="V" target="fin">
+      <data key="dData">EOF/
+V</data>
+      <data key="dSourcePoint">
+        <point x="44.0" y="29.8"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-9.1" y="-4.1"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="75.0" y="43.7"/>
+      </data>
+    </edge>
+    <edge id="U-Ready" source="U" target="Ready">
+      <data key="dData">GAP/
+U</data>
+      <data key="dSourcePoint">
+        <point x="41.3" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="15.9" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="64.9" y="-24.5"/>
+      </data>
+    </edge>
+    <edge id="U-fin" source="U" target="fin">
+      <data key="dData">EOF/
+U</data>
+      <data key="dSourcePoint">
+        <point x="43.5" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-7.3" y="-6.8"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="68.4" y="63.2"/>
+      </data>
+    </edge>
+    <edge id="F-Ready" source="F" target="Ready">
+      <data key="dData">GAP/
+F</data>
+      <data key="dSourcePoint">
+        <point x="37.9" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="20.2" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="59.0" y="-26.6"/>
+      </data>
+    </edge>
+    <edge id="F-fin" source="F" target="fin">
+      <data key="dData">EOF/
+F</data>
+      <data key="dSourcePoint">
+        <point x="44.0" y="31.6"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-8.8" y="-4.7"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="74.1" y="47.5"/>
+      </data>
+    </edge>
+    <edge id="A-Ready" source="A" target="Ready">
+      <data key="dData">GAP/
+A</data>
+      <data key="dSourcePoint">
+        <point x="33.6" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="25.5" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="50.7" y="-29.4"/>
+      </data>
+    </edge>
+    <edge id="A-fin" source="A" target="fin">
+      <data key="dData">EOF/
+A</data>
+      <data key="dSourcePoint">
+        <point x="28.2" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-3.0" y="-9.5"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="38.4" y="72.5"/>
+      </data>
+    </edge>
+    <edge id="R-Ready" source="R" target="Ready">
+      <data key="dData">GAP/
+R</data>
+      <data key="dSourcePoint">
+        <point x="33.6" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="25.5" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="50.6" y="-29.4"/>
+      </data>
+    </edge>
+    <edge id="R-fin" source="R" target="fin">
+      <data key="dData">EOF/
+R</data>
+      <data key="dSourcePoint">
+        <point x="34.9" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-5.4" y="-8.4"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="53.3" y="68.6"/>
+      </data>
+    </edge>
+    <edge id="L-Ready" source="L" target="Ready">
+      <data key="dData">GAP/
+L</data>
+      <data key="dSourcePoint">
+        <point x="32.1" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="27.4" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="47.4" y="-30.4"/>
+      </data>
+    </edge>
+    <edge id="L-fin" source="L" target="fin">
+      <data key="dData">EOF/
+L</data>
+      <data key="dSourcePoint">
+        <point x="44.0" y="38.2"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-7.7" y="-6.4"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="70.2" y="59.9"/>
+      </data>
+    </edge>
+    <edge id="W-Ready" source="W" target="Ready">
+      <data key="dData">GAP/
+W</data>
+      <data key="dSourcePoint">
+        <point x="25.9" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="35.2" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="32.3" y="-33.4"/>
+      </data>
+    </edge>
+    <edge id="W-fin" source="W" target="fin">
+      <data key="dData">EOF/
+W</data>
+      <data key="dSourcePoint">
+        <point x="26.3" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-2.1" y="-9.8"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="33.4" y="73.2"/>
+      </data>
+    </edge>
+    <edge id="P-Ready" source="P" target="Ready">
+      <data key="dData">GAP/
+P</data>
+      <data key="dSourcePoint">
+        <point x="26.3" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="34.6" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="33.5" y="-33.2"/>
+      </data>
+    </edge>
+    <edge id="P-fin" source="P" target="fin">
+      <data key="dData">EOF/
+P</data>
+      <data key="dSourcePoint">
+        <point x="32.3" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-4.6" y="-8.9"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="48.0" y="70.2"/>
+      </data>
+    </edge>
+    <edge id="J-Ready" source="J" target="Ready">
+      <data key="dData">GAP/
+J</data>
+      <data key="dSourcePoint">
+        <point x="23.4" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="38.2" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="25.9" y="-33.9"/>
+      </data>
+    </edge>
+    <edge id="J-fin" source="J" target="fin">
+      <data key="dData">EOF/
+J</data>
+      <data key="dSourcePoint">
+        <point x="25.4" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="-1.7" y="-9.9"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="31.2" y="73.5"/>
+      </data>
+    </edge>
+    <edge id="T-Ready" source="T" target="Ready">
+      <data key="dData">GAP/
+T</data>
+      <data key="dGeometry">
+        <point x="-148.9" y="-21.7"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="0.0" y="14.6"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="80.0" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-148.9" y="-21.7"/>
+      </data>
+    </edge>
+    <edge id="T-fin" source="T" target="fin">
+      <data key="dData">EOF/
+T</data>
+      <data key="dSourcePoint">
+        <point x="12.2" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="4.4" y="-9.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-2.8" y="70.5"/>
+      </data>
+    </edge>
+    <edge id="N-Ready" source="N" target="Ready">
+      <data key="dData">GAP/
+N</data>
+      <data key="dSourcePoint">
+        <point x="10.4" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="54.5" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-6.7" y="-29.4"/>
+      </data>
+    </edge>
+    <edge id="N-fin" source="N" target="fin">
+      <data key="dData">EOF/
+N</data>
+      <data key="dSourcePoint">
+        <point x="15.8" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="3.0" y="-9.5"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="5.6" y="72.5"/>
+      </data>
+    </edge>
+    <edge id="D-Ready" source="D" target="Ready">
+      <data key="dData">GAP/
+D</data>
+      <data key="dSourcePoint">
+        <point x="18.1" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="44.8" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="11.7" y="-33.4"/>
+      </data>
+    </edge>
+    <edge id="D-fin" source="D" target="fin">
+      <data key="dData">EOF/
+D</data>
+      <data key="dSourcePoint">
+        <point x="17.7" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="2.1" y="-9.8"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="10.6" y="73.2"/>
+      </data>
+    </edge>
+    <edge id="B-Ready" source="B" target="Ready">
+      <data key="dData">GAP/
+B</data>
+      <data key="dSourcePoint">
+        <point x="20.6" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="41.8" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="18.1" y="-33.9"/>
+      </data>
+    </edge>
+    <edge id="B-fin" source="B" target="fin">
+      <data key="dData">EOF/
+B</data>
+      <data key="dSourcePoint">
+        <point x="18.6" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="1.7" y="-9.9"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="12.8" y="73.5"/>
+      </data>
+    </edge>
+    <edge id="X-Ready" source="X" target="Ready">
+      <data key="dData">GAP/
+X</data>
+      <data key="dSourcePoint">
+        <point x="17.7" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="45.4" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="10.5" y="-33.2"/>
+      </data>
+    </edge>
+    <edge id="X-fin" source="X" target="fin">
+      <data key="dData">EOF/
+X</data>
+      <data key="dSourcePoint">
+        <point x="11.7" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="4.6" y="-8.9"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-4.0" y="70.2"/>
+      </data>
+    </edge>
+    <edge id="K-Ready" source="K" target="Ready">
+      <data key="dData">GAP/
+K</data>
+      <data key="dSourcePoint">
+        <point x="10.4" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="54.5" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-6.6" y="-29.4"/>
+      </data>
+    </edge>
+    <edge id="K-fin" source="K" target="fin">
+      <data key="dData">EOF/
+K</data>
+      <data key="dSourcePoint">
+        <point x="9.1" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="5.4" y="-8.4"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-9.3" y="68.6"/>
+      </data>
+    </edge>
+    <edge id="C-Ready" source="C" target="Ready">
+      <data key="dData">GAP/
+C</data>
+      <data key="dSourcePoint">
+        <point x="14.8" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="49.0" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="3.3" y="-32.0"/>
+      </data>
+    </edge>
+    <edge id="C-fin" source="C" target="fin">
+      <data key="dData">EOF/
+C</data>
+      <data key="dSourcePoint">
+        <point x="4.8" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="6.5" y="-7.6"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-17.4" y="65.8"/>
+      </data>
+    </edge>
+    <edge id="Y-Ready" source="Y" target="Ready">
+      <data key="dData">GAP/
+Y</data>
+      <data key="dSourcePoint">
+        <point x="11.9" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="52.6" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-3.4" y="-30.4"/>
+      </data>
+    </edge>
+    <edge id="Y-fin" source="Y" target="fin">
+      <data key="dData">EOF/
+Y</data>
+      <data key="dSourcePoint">
+        <point x="0.0" y="38.2"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="7.7" y="-6.4"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-26.2" y="59.9"/>
+      </data>
+    </edge>
+    <edge id="M-Ready" source="M" target="Ready">
+      <data key="dData">GAP/
+M</data>
+      <data key="dSourcePoint">
+        <point x="0.0" y="7.4"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="80.0" y="47.9"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-29.5" y="-9.5"/>
+      </data>
+    </edge>
+    <edge id="M-fin" source="M" target="fin">
+      <data key="dData">EOF/
+M</data>
+      <data key="dSourcePoint">
+        <point x="3.2" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="6.8" y="-7.3"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-20.0" y="64.8"/>
+      </data>
+    </edge>
+    <edge id="G-Ready" source="G" target="Ready">
+      <data key="dData">GAP/
+G</data>
+      <data key="dSourcePoint">
+        <point x="2.7" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="64.1" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-20.9" y="-24.5"/>
+      </data>
+    </edge>
+    <edge id="G-fin" source="G" target="fin">
+      <data key="dData">EOF/
+G</data>
+      <data key="dSourcePoint">
+        <point x="0.5" y="40.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="7.3" y="-6.8"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-24.4" y="63.2"/>
+      </data>
+    </edge>
+    <edge id="Z-Ready" source="Z" target="Ready">
+      <data key="dData">GAP/
+Z</data>
+      <data key="dSourcePoint">
+        <point x="9.0" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="56.2" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-9.5" y="-28.5"/>
+      </data>
+    </edge>
+    <edge id="Z-fin" source="Z" target="fin">
+      <data key="dData">EOF/
+Z</data>
+      <data key="dSourcePoint">
+        <point x="0.0" y="34.2"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="8.4" y="-5.4"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-28.6" y="52.6"/>
+      </data>
+    </edge>
+    <edge id="Q-Ready" source="Q" target="Ready">
+      <data key="dData">GAP/
+Q</data>
+      <data key="dSourcePoint">
+        <point x="6.1" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="59.8" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-15.0" y="-26.6"/>
+      </data>
+    </edge>
+    <edge id="Q-fin" source="Q" target="fin">
+      <data key="dData">EOF/
+Q</data>
+      <data key="dSourcePoint">
+        <point x="0.0" y="31.6"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="8.8" y="-4.7"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-30.1" y="47.5"/>
+      </data>
+    </edge>
+    <edge id="O-Ready" source="O" target="Ready">
+      <data key="dData">GAP/
+O</data>
+      <data key="dSourcePoint">
+        <point x="0.0" y="3.7"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="73.7" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-27.3" y="-16.5"/>
+      </data>
+    </edge>
+    <edge id="O-fin" source="O" target="fin">
+      <data key="dData">EOF/
+O</data>
+      <data key="dSourcePoint">
+        <point x="0.0" y="34.6"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="8.3" y="-5.5"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-28.3" y="53.4"/>
+      </data>
+    </edge>
+    <edge id="Ready-Ready" source="Ready" target="Ready">
+      <data key="dData">WORD/
+/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="-28.0"/>
+        <point x="40.0" y="-28.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="0.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="-38.0"/>
+      </data>
+    </edge>
+    <edge id="Ready-Ready#2" source="Ready" target="Ready">
+      <data key="dData">GAP/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="78.0"/>
+        <point x="40.0" y="78.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="50.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="88.0"/>
+      </data>
+    </edge>
+    <edge id="Ready-fin" source="Ready" target="fin">
+      <data key="dData">EOF/</data>
+    </edge>
+  </graph>
+</graphml>

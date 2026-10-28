@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <data key="gFormat">Cyberiada-GraphML-1.0</data>
+  <key id="gFormat" for="graphml" attr.name="format" attr.type="string"/>
+  <key id="dName" for="graph" attr.name="name" attr.type="string"/>
+  <key id="dName" for="node" attr.name="name" attr.type="string"/>
+  <key id="dStateMachine" for="graph" attr.name="stateMachine" attr.type="string"/>
+  <key id="dRegion" for="graph" attr.name="region" attr.type="string"/>
+  <key id="dGeometry" for="graph" attr.name="geometry"/>
+  <key id="dGeometry" for="node" attr.name="geometry"/>
+  <key id="dGeometry" for="edge" attr.name="geometry"/>
+  <key id="dSourcePoint" for="edge" attr.name="sourcePoint"/>
+  <key id="dTargetPoint" for="edge" attr.name="targetPoint"/>
+  <key id="dLabelGeometry" for="edge" attr.name="labelGeometry"/>
+  <key id="dNote" for="node" attr.name="note" attr.type="string"/>
+  <key id="dVertex" for="node" attr.name="vertex" attr.type="string"/>
+  <key id="dData" for="node" attr.name="data" attr.type="string"/>
+  <key id="dData" for="edge" attr.name="data" attr.type="string"/>
+  <graph id="sm" edgedefault="directed">
+    <data key="dStateMachine"/>
+    <data key="dName">E-mail address</data>
+    <node id="nMeta">
+      <data key="dNote">formal</data>
+      <data key="dName">CGML_META</data>
+      <data key="dData">standardVersion/ 1.0
+
+type/ fa</data>
+    </node>
+    <node id="c1">
+      <data key="dNote">formal</data>
+      <data key="dName">CGML_COMPONENT chars</data>
+      <data key="dData">type/ Classes
+
+letter/ [a-zA-Zа-яА-ЯёЁ]
+
+digit/ [0-9]
+
+dot/ \.
+
+sep/ [_\-]
+
+at/ @</data>
+      <data key="dGeometry">
+        <rect x="0" y="-260" width="150" height="256"/>
+      </data>
+    </node>
+    <node id="c2">
+      <data key="dNote">formal</data>
+      <data key="dName">FA_INPUT</data>
+      <data key="dData">letter
+digit
+dot
+sep
+at</data>
+      <data key="dGeometry">
+        <rect x="170" y="-260" width="150" height="136"/>
+      </data>
+    </node>
+    <node id="init">
+      <data key="dVertex">initial</data>
+      <data key="dGeometry">
+        <point x="-60" y="25"/>
+      </data>
+    </node>
+    <node id="Start">
+      <data key="dName">Start</data>
+      <data key="dGeometry">
+        <rect x="0" y="0" width="80" height="50"/>
+      </data>
+    </node>
+    <node id="Local">
+      <data key="dName">Local</data>
+      <data key="dGeometry">
+        <rect x="200" y="0" width="80" height="50"/>
+      </data>
+    </node>
+    <node id="LocalSep">
+      <data key="dName">LocalSep</data>
+      <data key="dGeometry">
+        <rect x="200" y="220" width="80" height="50"/>
+      </data>
+    </node>
+    <node id="At">
+      <data key="dName">At</data>
+      <data key="dGeometry">
+        <rect x="400" y="0" width="80" height="50"/>
+      </data>
+    </node>
+    <node id="Domain">
+      <data key="dName">Domain</data>
+      <data key="dGeometry">
+        <rect x="540" y="-60" width="320" height="420"/>
+      </data>
+      <graph id="Domain:" edgedefault="directed">
+        <data key="dRegion"/>
+        <data key="dGeometry">
+          <rect x="10" y="10" width="300" height="400"/>
+        </data>
+        <node id="Label">
+          <data key="dName">Label</data>
+          <data key="dGeometry">
+            <rect x="20" y="70" width="80" height="50"/>
+          </data>
+        </node>
+        <node id="T1">
+          <data key="dName">T1</data>
+          <data key="dGeometry">
+            <rect x="20" y="270" width="80" height="50"/>
+          </data>
+        </node>
+        <node id="T2">
+          <data key="dName">T2</data>
+          <data key="dGeometry">
+            <rect x="200" y="270" width="80" height="50"/>
+          </data>
+        </node>
+        <node id="Mid">
+          <data key="dName">Mid</data>
+          <data key="dGeometry">
+            <rect x="200" y="70" width="80" height="50"/>
+          </data>
+        </node>
+      </graph>
+    </node>
+    <node id="Dot">
+      <data key="dName">Dot</data>
+      <data key="dGeometry">
+        <rect x="640" y="480" width="80" height="50"/>
+      </data>
+    </node>
+    <node id="fin">
+      <data key="dVertex">final</data>
+      <data key="dGeometry">
+        <point x="940" y="245"/>
+      </data>
+    </node>
+    <edge id="init-Start" source="init" target="Start"/>
+    <edge id="Start-Local" source="Start" target="Local">
+      <data key="dData">letter/</data>
+      <data key="dGeometry">
+        <point x="140.0" y="53.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="80.0" y="36.2"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="0.0" y="36.2"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="140.0" y="53.0"/>
+      </data>
+    </edge>
+    <edge id="Start-Local#2" source="Start" target="Local">
+      <data key="dData">digit/</data>
+      <data key="dGeometry">
+        <point x="140.0" y="-3.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="80.0" y="13.8"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="0.0" y="13.8"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="140.0" y="-3.0"/>
+      </data>
+    </edge>
+    <edge id="Local-Local" source="Local" target="Local">
+      <data key="dData">letter/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="-28.0"/>
+        <point x="40.0" y="-28.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="0.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="-38.0"/>
+      </data>
+    </edge>
+    <edge id="Local-Local#2" source="Local" target="Local">
+      <data key="dData">digit/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="78.0"/>
+        <point x="40.0" y="78.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="50.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="88.0"/>
+      </data>
+    </edge>
+    <edge id="Local-LocalSep" source="Local" target="LocalSep">
+      <data key="dData">dot/</data>
+      <data key="dGeometry">
+        <point x="124.0" y="135.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="59.1" y="50.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="59.1" y="0.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="124.0" y="135.0"/>
+      </data>
+    </edge>
+    <edge id="Local-LocalSep#2" source="Local" target="LocalSep">
+      <data key="dData">sep/</data>
+      <data key="dGeometry">
+        <point x="68.0" y="135.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="46.4" y="50.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="46.4" y="0.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="68.0" y="135.0"/>
+      </data>
+    </edge>
+    <edge id="Local-At" source="Local" target="At">
+      <data key="dData">at/</data>
+    </edge>
+    <edge id="LocalSep-Local" source="LocalSep" target="Local">
+      <data key="dData">letter/</data>
+      <data key="dGeometry">
+        <point x="12.0" y="-85.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="33.6" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="33.6" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="12.0" y="-85.0"/>
+      </data>
+    </edge>
+    <edge id="LocalSep-Local#2" source="LocalSep" target="Local">
+      <data key="dData">digit/</data>
+      <data key="dGeometry">
+        <point x="-44.0" y="-85.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="20.9" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="20.9" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-44.0" y="-85.0"/>
+      </data>
+    </edge>
+    <edge id="At-Label" source="At" target="Label">
+      <data key="dData">letter/</data>
+      <data key="dGeometry">
+        <point x="128.3" y="7.2"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="80.0" y="16.9"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="0.0" y="6.5"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="128.3" y="7.2"/>
+      </data>
+    </edge>
+    <edge id="At-Label#2" source="At" target="Label">
+      <data key="dData">digit/</data>
+      <data key="dGeometry">
+        <point x="121.7" y="62.8"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="80.0" y="43.5"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="0.0" y="33.1"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="121.7" y="62.8"/>
+      </data>
+    </edge>
+    <edge id="Label-Label" source="Label" target="Label">
+      <data key="dData">letter/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="-28.0"/>
+        <point x="40.0" y="-28.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="0.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="-38.0"/>
+      </data>
+    </edge>
+    <edge id="Label-Label#2" source="Label" target="Label">
+      <data key="dData">digit/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="78.0"/>
+        <point x="40.0" y="78.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="50.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="88.0"/>
+      </data>
+    </edge>
+    <edge id="Domain-Dot" source="Domain" target="Dot">
+      <data key="dData">dot/</data>
+    </edge>
+    <edge id="Dot-T1" source="Dot" target="T1">
+      <data key="dData">letter/</data>
+    </edge>
+    <edge id="Dot-Mid" source="Dot" target="Mid">
+      <data key="dData">digit/</data>
+    </edge>
+    <edge id="T1-T2" source="T1" target="T2">
+      <data key="dData">letter/</data>
+    </edge>
+    <edge id="T1-Mid" source="T1" target="Mid">
+      <data key="dData">digit/</data>
+    </edge>
+    <edge id="T2-T2" source="T2" target="T2">
+      <data key="dData">letter/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="-28.0"/>
+        <point x="40.0" y="-28.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="0.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="-38.0"/>
+      </data>
+    </edge>
+    <edge id="T2-Mid" source="T2" target="Mid">
+      <data key="dData">digit/</data>
+    </edge>
+    <edge id="T2-fin" source="T2" target="fin">
+      <data key="dData">EOF/</data>
+    </edge>
+    <edge id="Mid-Mid" source="Mid" target="Mid">
+      <data key="dData">letter/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="-28.0"/>
+        <point x="40.0" y="-28.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="0.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="-38.0"/>
+      </data>
+    </edge>
+    <edge id="Mid-Mid#2" source="Mid" target="Mid">
+      <data key="dData">digit/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="78.0"/>
+        <point x="40.0" y="78.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="50.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="50.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="88.0"/>
+      </data>
+    </edge>
+  </graph>
+</graphml>

@@ -1,0 +1,7 @@
+# the letters A-Z, a space or a slash between the words
++ "JA" => .--- .-
++ "SOS HELP" => ... --- ... / .... . .-.. .--.
++ "SOS/HELP" => ... --- ... / .... . .-.. .--.
++ "SOS  HELP" => ... --- ... / / .... . .-.. .--.
+- "sos"
+- "SOS!"

@@ -1,0 +1,5 @@
+# the b of c1 replaces the b of C; the EOF of C serves c1 and c2
++ a b
++ a
+- a b b
++ a b a b

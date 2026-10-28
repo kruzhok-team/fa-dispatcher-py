@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <data key="gFormat">Cyberiada-GraphML-1.0</data>
+  <key id="gFormat" for="graphml" attr.name="format" attr.type="string"/>
+  <key id="dName" for="graph" attr.name="name" attr.type="string"/>
+  <key id="dName" for="node" attr.name="name" attr.type="string"/>
+  <key id="dStateMachine" for="graph" attr.name="stateMachine" attr.type="string"/>
+  <key id="dRegion" for="graph" attr.name="region" attr.type="string"/>
+  <key id="dGeometry" for="graph" attr.name="geometry"/>
+  <key id="dGeometry" for="node" attr.name="geometry"/>
+  <key id="dGeometry" for="edge" attr.name="geometry"/>
+  <key id="dSourcePoint" for="edge" attr.name="sourcePoint"/>
+  <key id="dTargetPoint" for="edge" attr.name="targetPoint"/>
+  <key id="dLabelGeometry" for="edge" attr.name="labelGeometry"/>
+  <key id="dNote" for="node" attr.name="note" attr.type="string"/>
+  <key id="dVertex" for="node" attr.name="vertex" attr.type="string"/>
+  <key id="dData" for="node" attr.name="data" attr.type="string"/>
+  <key id="dData" for="edge" attr.name="data" attr.type="string"/>
+  <graph id="sm" edgedefault="directed">
+    <data key="dStateMachine"/>
+    <data key="dName">Parity (Mealy)</data>
+    <node id="nMeta">
+      <data key="dNote">formal</data>
+      <data key="dName">CGML_META</data>
+      <data key="dData">standardVersion/ 1.0
+
+type/ fa</data>
+    </node>
+    <node id="c1">
+      <data key="dNote">formal</data>
+      <data key="dName">FA_INPUT</data>
+      <data key="dData">0
+1</data>
+      <data key="dGeometry">
+        <rect x="0" y="-110" width="150" height="76"/>
+      </data>
+    </node>
+    <node id="c2">
+      <data key="dNote">formal</data>
+      <data key="dName">FA_OUTPUT</data>
+      <data key="dData">EVEN
+ODD</data>
+      <data key="dGeometry">
+        <rect x="170" y="-110" width="150" height="76"/>
+      </data>
+    </node>
+    <node id="init">
+      <data key="dVertex">initial</data>
+      <data key="dGeometry">
+        <point x="-60" y="25"/>
+      </data>
+    </node>
+    <node id="Even">
+      <data key="dName">Even</data>
+      <data key="dGeometry">
+        <rect x="0" y="0" width="80" height="50"/>
+      </data>
+    </node>
+    <node id="Odd">
+      <data key="dName">Odd</data>
+      <data key="dGeometry">
+        <rect x="240" y="0" width="80" height="50"/>
+      </data>
+    </node>
+    <node id="fin">
+      <data key="dVertex">final</data>
+      <data key="dGeometry">
+        <point x="160" y="160"/>
+      </data>
+    </node>
+    <edge id="init-Even" source="init" target="Even"/>
+    <edge id="Even-Even" source="Even" target="Even">
+      <data key="dData">0/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="-28.0"/>
+        <point x="40.0" y="-28.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="0.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="-38.0"/>
+      </data>
+    </edge>
+    <edge id="Even-Odd" source="Even" target="Odd">
+      <data key="dData">1/</data>
+      <data key="dGeometry">
+        <point x="160.0" y="-3.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="80.0" y="15.7"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="0.0" y="15.7"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="160.0" y="-3.0"/>
+      </data>
+    </edge>
+    <edge id="Odd-Odd" source="Odd" target="Odd">
+      <data key="dData">0/</data>
+      <data key="dGeometry">
+        <point x="16.0" y="-28.0"/>
+        <point x="40.0" y="-28.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="16.0" y="0.0"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="40.0" y="0.0"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="28.0" y="-38.0"/>
+      </data>
+    </edge>
+    <edge id="Odd-Even" source="Odd" target="Even">
+      <data key="dData">1/</data>
+      <data key="dGeometry">
+        <point x="-80.0" y="53.0"/>
+      </data>
+      <data key="dSourcePoint">
+        <point x="0.0" y="34.3"/>
+      </data>
+      <data key="dTargetPoint">
+        <point x="80.0" y="34.3"/>
+      </data>
+      <data key="dLabelGeometry">
+        <point x="-80.0" y="53.0"/>
+      </data>
+    </edge>
+    <edge id="Even-fin" source="Even" target="fin">
+      <data key="dData">EOF/
+EVEN</data>
+    </edge>
+    <edge id="Odd-fin" source="Odd" target="fin">
+      <data key="dData">EOF/
+ODD</data>
+    </edge>
+  </graph>
+</graphml>

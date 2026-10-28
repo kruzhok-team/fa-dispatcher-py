@@ -1,0 +1,12 @@
+# [a-z0-9]+([._-][a-z0-9]+)*@[a-z0-9]+(\.[a-z0-9]+)*\.[a-z]{2,}
++ "j.doe@mail.ru"
++ "user_1@mail2.example.com"
++ "иван@почта.рф"
++ "J.Doe@Mail.RU"
+- "j..doe@mail.ru"
+- "john@localhost"
+- "a@b.c"
+- "a@b.c1"
+- "j doe@mail.ru"
+- "@mail.ru"
+- "j.doe@mail.ru."

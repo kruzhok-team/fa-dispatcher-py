@@ -1,0 +1,6 @@
+# the parity on EOF: 'A' in UART 7E1 has the parity bit 0
++ 1 0 0 0 0 0 1 => EVEN
++ 1 0 1 1 => ODD
++ "1011" => ODD
++ => EVEN
+- 1 0 2
