@@ -1,0 +1,28 @@
+set(CPACK_VERBATIM_VARIABLES YES)
+set(CPACK_PACKAGE_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(CPACK_PACKAGE_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(CPACK_PACKAGE_VERSION_PATCH @PROJECT_VERSION_PATCH@)
+set(CPACK_PACKAGE_VENDOR "Kruzhok Association")
+set(CPACK_PACKAGE_CONTACT "aleksey@fedoseev.net")
+set(CPACK_RESOURCE_FILE_LICENSE "@PROJECT_SOURCE_DIR@/LICENSE")
+set(CPACK_RESOURCE_FILE_README "@PROJECT_SOURCE_DIR@/README.md")
+
+# the pure Python modules, the command and the plugin of the editor
+set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "all")
+set(CPACK_DEBIAN_PACKAGE_NAME "python3-fa-dispatcher")
+set(CPACK_DEBIAN_PACKAGE_SECTION "python")
+set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "The Python interpreter of the CyberiadaML finite automaton diagrams
+Runs deterministic finite automaton diagrams (type/ fa) on a tape of symbols
+or of text to the verdict and the output: the command fa-run, the tests
+files, the character classes. Includes the plugin of CyberiadaPro, the
+Cyberiada state machine editor: an automaton step by step on a tape. The
+module fad.")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "python3 (>= 3.8), python3-libcyberiadamlpp (>= 1.1.0) | python3-cyberiadaml (>= 1.8.0)")
+set(CPACK_DEBIAN_PACKAGE_ENHANCES "cyberiada-pro")
+
+# a per-release build tags the version (e.g. 0.1.0+ubuntu2404)
+set(DISTRO_TAG "@DISTRO_TAG@")
+if(NOT DISTRO_TAG STREQUAL "")
+  set(CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION}+${DISTRO_TAG}")
+endif()
