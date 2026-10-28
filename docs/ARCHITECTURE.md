@@ -1,6 +1,6 @@
 # The Python FA Dispatcher Architecture
 
-Document version: 0.1 (2026-10-28)
+Document version: 0.2 (2026-10-28)
 
 The dispatcher executes the diagrams of deterministic finite automata (FA) at
 run time. The diagrams follow ПРИМС:КА, the FA extension of PNST 984-2024
@@ -53,7 +53,7 @@ open:
 
 | Point | Rule of the dispatcher |
 |---|---|
-| a symbol outside the declared input alphabet | rejected at its position, like a symbol without a transition; the reason names the alphabet |
+| a symbol outside a declared `FA_INPUT` list | rejected at its position, like a symbol without a transition; the reason names the alphabet (an `FA_INPUT_RE` one is not matched: the reason is the missing transition) |
 | the tape after a rejection | not read; `EOF` is not sent |
 | the outputs of one step | the output of the transition first, then the `entry/` output of the simple state entered |
 | the start | the initial transitions are followed before the first symbol; the `entry/` output of the initial state opens the output |
@@ -241,13 +241,12 @@ the kind first:
 |---|---|
 | `DocumentError` | the document is no `type/ fa`, the library refused it (with its message), the `Classes` component is wrong |
 | `TapeError` | a line of a tape file or a tests file is wrong; with the line number |
-| `FinishedError` | `feed()` or `end()` after the verdict |
+| `StoppedError` | `feed()` or `end()` without a running run: before `start()` or after the verdict |
 
 ## Interface
 
 The interface is specified for the authors of the programs and the diagrams
-in `API.md` (`API-ru.md` in Russian), written after this document. Its
-outline:
+in `API.md` (`API-ru.md` in Russian). Its outline:
 
 ```python
 import fad
@@ -265,8 +264,8 @@ dispatcher.state()                             # the active state
 dispatcher.symbols()                           # the symbols it reads
 ```
 
-`fad` exports `Dispatcher`, `Automaton`, `Step`, `Result`, the `ACCEPTED`,
-`REJECTED` and `FIRED` constants and the errors.
+`fad` exports `Dispatcher`, `Automaton`, `read`, `Step`, `Result`, the
+`ACCEPTED`, `REJECTED`, `FIRED` and `EOF` constants and the errors.
 
 ## The command line
 
@@ -275,6 +274,7 @@ fa-run DIAGRAM [SYMBOL ...]     a tape of symbols
 fa-run DIAGRAM --text TEXT      a text; "-" reads stdin, the last newline dropped
 fa-run DIAGRAM --tape FILE      a tape file; "-" reads stdin
 fa-run DIAGRAM --test FILE      a tests file
+fa-run DIAGRAM --session        the editor session over stdin and stdout
        --join                   the output without the spaces between the symbols
        --trace                  the steps on stderr
 ```
@@ -529,7 +529,7 @@ plugin on the Mealy, Moore and nested diagrams.
 
 | Stage | Contents |
 |---|---|
-| 0 | this document; then `API.md` and `API-ru.md`: the interface, the tapes, the tests files, the classes |
+| 0 | this document, `API.md` and `API-ru.md`: the interface, the tapes, the tests files, the classes |
 | 1 | the reader, the model, the run, the classes, the tapes, `fa-run`, the examples, the tests and the oracle; the output symbols of `libcyberiadaml` for the encoder |
 | 2 | the session and the plugin's Run on a Tape, with the editor test |
 | 3 | Test the Tapes; the packages: pip, Debian, the plugin |

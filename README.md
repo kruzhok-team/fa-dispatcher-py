@@ -14,6 +14,10 @@ documentation -- under the GNU Free Documentation License (version 1.3).
 
 The documentation is located in the `docs` directory and contains:
 
+* The interface - `API.md` (`API-ru.md` in Russian): for the authors of the
+  programs and the diagrams - a diagram of an automaton, the `Dispatcher`, the
+  automaton, the character classes, the tapes and the tests files, the
+  command line, the errors and the session of the editor
 * The architecture - `ARCHITECTURE.md`: the usage requirements, the
   references to the FA extension of PNST 984-2024 and to PNST 1044-2025, the
   model, the run, the tapes, the character classes, the session of the editor
