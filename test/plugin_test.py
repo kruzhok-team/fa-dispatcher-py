@@ -20,10 +20,11 @@
 #
 #  -----------------------------------------------------------------------------
 
-"""The plugin in the editor: the session script of test/session and the tests
-action. Skipped without a CyberiadaPro binary that starts (CYBERIADA_PRO, PATH,
-or the sibling build)."""
+"""The plugin: its installation, then in the editor the session script of
+test/session and the tests action; the editor part is skipped without a
+CyberiadaPro binary that starts (CYBERIADA_PRO, PATH, or the sibling build)."""
 
+import json
 import os
 import shutil
 import subprocess
@@ -32,9 +33,44 @@ import tempfile
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 REPOSITORY = os.path.dirname(TEST_DIR)
-PLUGIN = 'fa-dispatcher'
-SKIPPED = 77
+sys.path.insert(0, REPOSITORY)
+
+import fad_plugin  # pylint: disable=wrong-import-position
+
+PLUGIN = fad_plugin.PLUGIN_ID
 TIMEOUT_S = 120
+
+
+def report(name, ok, detail=''):
+    print(('ok   ' if ok else 'FAIL ') + name + ('' if ok else '\n' + str(detail)))
+    return 0 if ok else 1
+
+
+def installer():
+    """The copy of the plugin into a folder: pinned to this Python, replaced
+    on a second install, a foreign folder refused."""
+    failed = 0
+    with tempfile.TemporaryDirectory() as directory:
+        folder = fad_plugin.install(directory)
+        with open(os.path.join(folder, fad_plugin.DESCRIPTOR), encoding='utf-8') as f:
+            descriptor = json.load(f)
+        actions = descriptor['actions'] + descriptor.get('session', {}).get('actions', [])
+        ok = (folder == os.path.join(directory, PLUGIN) and 'interpreter' not in descriptor and
+              all(a['argv'][0] == sys.executable for a in actions) and
+              descriptor['env'].get('PYTHONPATH') == REPOSITORY and
+              os.path.isfile(os.path.join(folder, 'i18n', 'ru.json')) and
+              os.path.isfile(os.path.join(folder, 'icons', 'tape.svg')))
+        failed += report('install', ok, descriptor)
+        failed += report('install twice', fad_plugin.install(directory) == folder)
+        foreign = os.path.join(directory, 'other')
+        os.makedirs(os.path.join(foreign, PLUGIN))
+        try:
+            fad_plugin.install(foreign)
+            refused = False
+        except fad_plugin.PluginError:
+            refused = True
+        failed += report('a foreign folder refused', refused)
+    return failed
 
 
 def environment(profile):
@@ -73,33 +109,30 @@ def batch(binary, env, *args):
 
 
 def main():
+    failed = installer()
     with tempfile.TemporaryDirectory() as profile:
         env = environment(profile)
         binary = editor(env)
         if binary is None:
-            print('skipped: no CyberiadaPro binary')
-            return SKIPPED
-        failed = 0
+            print('skipped the editor part: no CyberiadaPro binary')
+            return 1 if failed else 0
         code, out = batch(binary, env, '--plugin-path', '.', '--list-plugins')
         if 'session: tape' not in out:
-            print('skipped: the editor has no plugin sessions\n' + out)
-            return SKIPPED
+            print('skipped the editor part: the editor has no plugin sessions\n' + out)
+            return 1 if failed else 0
         code, out = batch(binary, env, 'examples/morse-decoder.graphml', '--plugin-path', '.',
                           '--run-plugin', PLUGIN + ':tape', '--session-script',
                           'test/session/decoder.session', '--dump-session')
-        ok = code == 0 and 'output=J,A' in out and 'verdict=accepted' in out
-        print(('ok   ' if ok else 'FAIL ') + 'the session' + ('' if ok else '\n' + out))
-        failed += 0 if ok else 1
+        failed += report('the session', code == 0 and 'output=J,A' in out and
+                         'verdict=accepted' in out, out)
         tests = os.path.join(profile, 'email.tests')
         with open(tests, 'w', encoding='utf-8') as target:
             target.write('+ "j.doe@mail.ru"\n+ "a@b.c"\n')
         code, out = batch(binary, env, 'examples/email.graphml', '--plugin-path', '.',
                           '--run-plugin', PLUGIN + ':test', '--plugin-param', 'tests=' + tests,
                           '--dump-plugin')
-        ok = code == 0 and 'count: 1' in out and \
-            'error - T1: line 2: expected accepted, got rejected at EOF' in out
-        print(('ok   ' if ok else 'FAIL ') + 'the tests action' + ('' if ok else '\n' + out))
-        failed += 0 if ok else 1
+        failed += report('the tests action', code == 0 and 'count: 1' in out and
+                         'error - T1: line 2: expected accepted, got rejected at EOF' in out, out)
     return 1 if failed else 0
 
 

@@ -28,12 +28,14 @@ import json
 import sys
 
 import fad
+import fad_plugin
 import fad_tape
 
 EXIT_ACCEPTED = 0
 EXIT_REJECTED = 1
 EXIT_ERROR = 2
 STDIN = '-'
+INSTALL = '--install-editor-plugin'
 
 
 def _read(path):
@@ -82,7 +84,24 @@ def _test(dispatcher, path, diagnostics=None):
     return EXIT_REJECTED if failures else EXIT_ACCEPTED
 
 
+def install_plugin(argv):
+    """The --install-editor-plugin [DIR] command."""
+    index = argv.index(INSTALL)
+    target = argv[index + 1] if index + 1 < len(argv) else None
+    try:
+        folder = fad_plugin.install(target or None)
+    except fad_plugin.PluginError as e:
+        print('fa-run: {}'.format(e), file=sys.stderr)
+        return EXIT_ERROR
+    print('installed the editor plugin {} to\n  {}\nit runs {}; restart the editor'.format(
+        fad_plugin.PLUGIN_ID, folder, sys.executable))
+    return EXIT_ACCEPTED
+
+
 def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if INSTALL in argv:
+        return install_plugin(argv)
     parser = argparse.ArgumentParser(
         prog='fa-run', description='Run a finite automaton diagram (type/ fa) on a tape.')
     parser.add_argument('diagram', help='the CyberiadaML document')
@@ -99,6 +118,9 @@ def main(argv=None):
     parser.add_argument('--join', action='store_true',
                         help='the output without spaces between the symbols')
     parser.add_argument('--trace', action='store_true', help='the trace records on stderr')
+    parser.add_argument(INSTALL, metavar='DIR', nargs='?', const='',
+                        help='copy the editor plugin into the plugin folder of the editor '
+                             '(or into DIR) and exit')
     args = parser.parse_args(argv)
     if args.symbols and (args.text is not None or args.tape or args.test or args.session):
         parser.error('the symbols go without --text, --tape, --test and --session')
