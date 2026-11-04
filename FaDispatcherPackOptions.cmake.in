@@ -7,7 +7,7 @@ set(CPACK_PACKAGE_CONTACT "aleksey@fedoseev.net")
 set(CPACK_RESOURCE_FILE_LICENSE "@PROJECT_SOURCE_DIR@/LICENSE")
 set(CPACK_RESOURCE_FILE_README "@PROJECT_SOURCE_DIR@/README.md")
 
-# the pure Python modules, the command and the plugin of the editor
+# the pure Python package, the command and the plugin of the editor
 set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "all")
 set(CPACK_DEBIAN_PACKAGE_NAME "python3-fa-dispatcher")
@@ -17,7 +17,7 @@ Runs deterministic finite automaton diagrams (type/ fa) on a tape of symbols
 or of text to the verdict and the output: the command fa-run, the tests
 files, the character classes. Includes the plugin of CyberiadaPro, the
 Cyberiada state machine editor: an automaton step by step on a tape. The
-module fad.")
+package fad.")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "python3 (>= 3.8), python3-libcyberiadamlpp (>= 1.1.0) | python3-cyberiadaml (>= 1.8.0)")
 set(CPACK_DEBIAN_PACKAGE_ENHANCES "cyberiada-pro")
 

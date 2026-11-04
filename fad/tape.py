@@ -23,7 +23,7 @@
 """The tape files (a symbol or a quoted text per line) and the tests files (+ or -,
 a tape, => the expected output) of docs/API.md, Tapes and tests files."""
 
-from fad_model import ACCEPTED, REJECTED, TapeError
+from fad.model import ACCEPTED, REJECTED, TapeError
 
 SYMBOL = 'symbol'
 TEXT = 'text'

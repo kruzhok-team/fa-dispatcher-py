@@ -34,7 +34,7 @@
       "description": "Run the tapes of a tests file; a failing tape is a finding on the state where its run stopped",
       "argv": [
         "-m",
-        "fad_cli",
+        "fad",
         "${document}",
         "--test",
         "${param:tests}",
@@ -58,7 +58,7 @@
         "description": "Run the automaton on a tape one symbol at a time; the editor marks the active state and the fired transition and shows the verdict and the output",
         "argv": [
           "-m",
-          "fad_cli",
+          "fad",
           "${document}",
           "--session"
         ]

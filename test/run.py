@@ -44,9 +44,9 @@ if os.environ.get('FAD_BACKEND') == 'cml':
     sys.modules['CyberiadaML'] = cml
 
 import fad  # pylint: disable=wrong-import-position
-import fad_cli  # pylint: disable=wrong-import-position
-import fad_model  # pylint: disable=wrong-import-position
-import fad_tape  # pylint: disable=wrong-import-position
+import fad.cli  # pylint: disable=wrong-import-position
+import fad.model  # pylint: disable=wrong-import-position
+import fad.tape  # pylint: disable=wrong-import-position
 
 EXAMPLES_DIR = os.path.join(REPOSITORY, 'examples')
 COMPAT_TESTS_DIR = os.path.join(TEST_DIR, 'compat')
@@ -82,8 +82,8 @@ def tests_files():
 def run_tests_files(report):
     for diagram, path in tests_files():
         with open(path, encoding='utf-8') as source:
-            tests = fad_tape.read_tests(source.read())
-        failures = fad_tape.check(fad.Dispatcher(diagram), tests)
+            tests = fad.tape.read_tests(source.read())
+        failures = fad.tape.check(fad.Dispatcher(diagram), tests)
         report.check(os.path.relpath(path, REPOSITORY), not failures,
                      '\n'.join('  line {}: {}'.format(f.test.line, f.message) for f in failures))
 
@@ -134,23 +134,23 @@ def expect_error(error, operation):
 def run_parts(report):
     good = ['a', '@', 'я', '.', '\\.', '\\-', '\\\\', '[a-z0-9_]', '[ ]', '[_\\-]', '[а-яё]']
     bad = ['ab', '-', '[a-]', '[]', '\\a', '[z-a]', '[a', '[[]']
-    wrong = [p for p in good if expect_error(ValueError, lambda p=p: fad_model.class_pattern(p))]
-    wrong += [p for p in bad if not expect_error(ValueError, lambda p=p: fad_model.class_pattern(p))]
+    wrong = [p for p in good if expect_error(ValueError, lambda p=p: fad.model.class_pattern(p))]
+    wrong += [p for p in bad if not expect_error(ValueError, lambda p=p: fad.model.class_pattern(p))]
     report.check('the class patterns', not wrong, '  ' + ' '.join(wrong))
-    pattern = fad_model.class_pattern('[_\\-]')
+    pattern = fad.model.class_pattern('[_\\-]')
     report.check('a bracket pattern matches its characters',
                  pattern.fullmatch('-') and pattern.fullmatch('_') and not pattern.fullmatch('a'))
 
-    items = fad_tape.read('# a comment\nDOT\n\n  "a b"  \nDASH\n')
+    items = fad.tape.read('# a comment\nDOT\n\n  "a b"  \nDASH\n')
     report.check('a tape file', [(i.kind, i.value, i.line) for i in items] ==
                  [('symbol', 'DOT', 2), ('text', 'a b', 4), ('symbol', 'DASH', 5)])
     report.check('a tape file written and read back',
-                 [i.value for i in fad_tape.read(fad_tape.write(items))] == ['DOT', 'a b', 'DASH'])
+                 [i.value for i in fad.tape.read(fad.tape.write(items))] == ['DOT', 'a b', 'DASH'])
     errors = [text for text in ('"abc', 'x 1', '+ "a" b', '+ "a')
-              if not expect_error(fad.TapeError, lambda t=text: fad_tape.read_tests(t)
-                                  if not t.startswith('"') else fad_tape.read(t))]
+              if not expect_error(fad.TapeError, lambda t=text: fad.tape.read_tests(t)
+                                  if not t.startswith('"') else fad.tape.read(t))]
     report.check('the wrong tape and tests lines', not errors, '  ' + ' | '.join(errors))
-    tests = fad_tape.read_tests('+ => EVEN\n- 1 0 2\n+ "a b" => x y\n')
+    tests = fad.tape.read_tests('+ => EVEN\n- 1 0 2\n+ "a b" => x y\n')
     report.check('a tests file', [(t.verdict, [i.value for i in t.items], t.output) for t in tests] ==
                  [('accepted', [], ['EVEN']), ('rejected', ['1', '0', '2'], None),
                   ('accepted', ['a b'], ['x', 'y'])])
@@ -190,7 +190,7 @@ def cli(argv, stdin=''):
     try:
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             try:
-                code = fad_cli.main(argv)
+                code = fad.cli.main(argv)
             except SystemExit as e:  # an argparse error is a FAIL with its message
                 code = e.code
     finally:
@@ -219,7 +219,7 @@ def run_cli(report):
     report.check('fa-run --test', result[0] == 0 and result[2].endswith('11 passed\n'),
                  '  {}'.format(result))
     result = cli([os.path.join(TEST_DIR, 'not-fa.graphml'), '1'])
-    report.check('fa-run a wrong document', result[0] == fad_cli.EXIT_ERROR, '  {}'.format(result))
+    report.check('fa-run a wrong document', result[0] == fad.cli.EXIT_ERROR, '  {}'.format(result))
     code, _, trace = cli([example('parity-recognizer'), '--trace', '1'])
     report.check('fa-run --trace', code == 1 and 'fire Even-Odd' in trace and
                  trace.endswith('rejected at EOF: Odd is not accepting\n'), '  ' + trace)
@@ -287,10 +287,10 @@ def run_oracle(report):
     for diagram, path in tests_files():
         dispatcher = fad.Dispatcher(diagram)
         with open(path, encoding='utf-8') as source:
-            tests = fad_tape.read_tests(source.read())
+            tests = fad.tape.read_tests(source.read())
         differ = []
         for test in tests:
-            tape = fad_tape.symbols(test.items, dispatcher.classify)
+            tape = fad.tape.symbols(test.items, dispatcher.classify)
             result = dispatcher.run(tape)
             expected = hsmd_run(hsmd, dispatcher.automaton, tape)
             if (result.verdict, result.output) != expected:

@@ -44,8 +44,8 @@ class PluginError(Exception):
 
 
 def _tree():
-    """The source tree holding the modules."""
-    return os.path.dirname(os.path.abspath(__file__))
+    """The source tree holding the package."""
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def source():

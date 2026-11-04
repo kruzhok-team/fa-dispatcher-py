@@ -35,9 +35,9 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 REPOSITORY = os.path.dirname(TEST_DIR)
 sys.path.insert(0, REPOSITORY)
 
-import fad_plugin  # pylint: disable=wrong-import-position
+import fad.plugin  # pylint: disable=wrong-import-position
 
-PLUGIN = fad_plugin.PLUGIN_ID
+PLUGIN = fad.plugin.PLUGIN_ID
 TIMEOUT_S = 120
 
 
@@ -51,8 +51,8 @@ def installer():
     on a second install, a foreign folder refused."""
     failed = 0
     with tempfile.TemporaryDirectory() as directory:
-        folder = fad_plugin.install(directory)
-        with open(os.path.join(folder, fad_plugin.DESCRIPTOR), encoding='utf-8') as f:
+        folder = fad.plugin.install(directory)
+        with open(os.path.join(folder, fad.plugin.DESCRIPTOR), encoding='utf-8') as f:
             descriptor = json.load(f)
         actions = descriptor['actions'] + descriptor.get('session', {}).get('actions', [])
         ok = (folder == os.path.join(directory, PLUGIN) and 'interpreter' not in descriptor and
@@ -61,13 +61,13 @@ def installer():
               os.path.isfile(os.path.join(folder, 'i18n', 'ru.json')) and
               os.path.isfile(os.path.join(folder, 'icons', 'tape.svg')))
         failed += report('install', ok, descriptor)
-        failed += report('install twice', fad_plugin.install(directory) == folder)
+        failed += report('install twice', fad.plugin.install(directory) == folder)
         foreign = os.path.join(directory, 'other')
         os.makedirs(os.path.join(foreign, PLUGIN))
         try:
-            fad_plugin.install(foreign)
+            fad.plugin.install(foreign)
             refused = False
-        except fad_plugin.PluginError:
+        except fad.plugin.PluginError:
             refused = True
         failed += report('a foreign folder refused', refused)
     return failed

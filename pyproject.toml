@@ -21,11 +21,10 @@ classifiers = [
 dependencies = ["cyberiadaml-py>=1.8; python_version >= '3.10' or sys_platform != 'win32'"]
 
 [project.scripts]
-fa-run = "fad_cli:main"
+fa-run = "fad.cli:main"
 
 [tool.setuptools]
-py-modules = ["fad", "fad_model", "fad_reader", "fad_tape", "fad_cli", "fad_session",
-              "fad_plugin"]
+packages = ["fad"]
 
 # the editor plugin under the install prefix; fa-run --install-editor-plugin
 # copies it into the plugin folder of the editor

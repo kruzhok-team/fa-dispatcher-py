@@ -27,7 +27,7 @@ import json
 import sys
 
 import fad
-import fad_tape
+import fad.tape
 
 METHOD_NOT_FOUND = -32601
 INVALID_PARAMS = -32602
@@ -162,14 +162,14 @@ class Session:
                 self.reply_error(ident, INVALID_PARAMS, 'the tape cannot be read: {}'.format(e))
                 return
         try:
-            items = fad_tape.read(text if isinstance(text, str) else '')
+            items = fad.tape.read(text if isinstance(text, str) else '')
         except fad.TapeError as e:
             self.reply_error(ident, INVALID_PARAMS, 'the tape is not read',
                              [{'line': e.line, 'message': e.message}])
             return
         self.tape = []
         for item in items:
-            if item.kind == fad_tape.TEXT:
+            if item.kind == fad.tape.TEXT:
                 self.tape.extend(zip(self.dispatcher.classify(item.value), item.value))
             else:
                 self.tape.append((item.value, None))
@@ -180,10 +180,10 @@ class Session:
 
     def save(self, ident, params):
         path = params.get('path')
-        items = [fad_tape.Item(fad_tape.SYMBOL, symbol) for symbol in self.inputs]
+        items = [fad.tape.Item(fad.tape.SYMBOL, symbol) for symbol in self.inputs]
         try:
             with open(path, 'w', encoding='utf-8') as target:
-                target.write(fad_tape.write(items))
+                target.write(fad.tape.write(items))
         except (OSError, TypeError) as e:
             self.reply_error(ident, INTERNAL_ERROR, 'the tape cannot be written: {}'.format(e))
             return

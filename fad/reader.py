@@ -28,7 +28,7 @@ try:
 except ImportError:
     from cyberiadaml_py import cml as CyberiadaML
 
-from fad_model import (DocumentError, Automaton, State, Transition, INPUT_NAMES,
+from fad.model import (DocumentError, Automaton, State, Transition, INPUT_NAMES,
                        OUTPUT_NAMES)
 
 META_NAME = 'CGML_META'

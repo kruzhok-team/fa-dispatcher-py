@@ -23,7 +23,7 @@
 """The FA dispatcher (docs/API.md): a deterministic finite automaton diagram of
 CyberiadaML-GraphML (type/ fa) runs a tape of symbols to its verdict and output."""
 
-from fad_model import (EOF, ACCEPTED, REJECTED, FIRED, FA_INPUT, FAError, DocumentError,
+from fad.model import (EOF, ACCEPTED, REJECTED, FIRED, FA_INPUT, FAError, DocumentError,
                        TapeError, StoppedError, Automaton)
 
 __all__ = ['Dispatcher', 'Automaton', 'read', 'Step', 'Result', 'ACCEPTED', 'REJECTED',
@@ -37,8 +37,8 @@ def _shown(symbol):
 
 def read(path):
     """The Automaton of a CyberiadaML document."""
-    import fad_reader  # pylint: disable=import-outside-toplevel
-    return fad_reader.read(path)
+    from fad import reader  # pylint: disable=import-outside-toplevel
+    return reader.read(path)
 
 
 class Step:

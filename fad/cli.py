@@ -28,8 +28,8 @@ import json
 import sys
 
 import fad
-import fad_plugin
-import fad_tape
+import fad.plugin
+import fad.tape
 
 EXIT_ACCEPTED = 0
 EXIT_REJECTED = 1
@@ -64,13 +64,13 @@ def _write_diagnostics(path, diagnostics):
 
 def _test(dispatcher, path, diagnostics=None):
     try:
-        tests = fad_tape.read_tests(_read(path))
+        tests = fad.tape.read_tests(_read(path))
     except fad.TapeError as e:
         if diagnostics:
             _write_diagnostics(diagnostics, [{'severity': 'error', 'message': '{}: {}'.format(
                 path, e)}])
         raise
-    failures = fad_tape.check(dispatcher, tests)
+    failures = fad.tape.check(dispatcher, tests)
     for failure in failures:
         print('{}:{}: {}'.format(path, failure.test.line, failure.message), file=sys.stderr)
     passed = len(tests) - len(failures)
@@ -89,12 +89,12 @@ def install_plugin(argv):
     index = argv.index(INSTALL)
     target = argv[index + 1] if index + 1 < len(argv) else None
     try:
-        folder = fad_plugin.install(target or None)
-    except fad_plugin.PluginError as e:
+        folder = fad.plugin.install(target or None)
+    except fad.plugin.PluginError as e:
         print('fa-run: {}'.format(e), file=sys.stderr)
         return EXIT_ERROR
     print('installed the editor plugin {} to\n  {}\nit runs {}; restart the editor'.format(
-        fad_plugin.PLUGIN_ID, folder, sys.executable))
+        fad.plugin.PLUGIN_ID, folder, sys.executable))
     return EXIT_ACCEPTED
 
 
@@ -128,15 +128,15 @@ def main(argv=None):
     try:
         dispatcher = fad.Dispatcher(args.diagram, trace=_trace if args.trace else None)
         if args.session:
-            import fad_session  # pylint: disable=import-outside-toplevel
-            return fad_session.serve(dispatcher)
+            from fad import session  # pylint: disable=import-outside-toplevel
+            return session.serve(dispatcher)
         if args.test:
             return _test(dispatcher, args.test, args.diagnostics)
         if args.text is not None:
             text = _drop_newline(_read(STDIN)) if args.text == STDIN else args.text
             tape = dispatcher.classify(text)
         elif args.tape:
-            tape = fad_tape.symbols(fad_tape.read(_read(args.tape)), dispatcher.classify)
+            tape = fad.tape.symbols(fad.tape.read(_read(args.tape)), dispatcher.classify)
         else:
             tape = args.symbols
     except (fad.FAError, OSError) as e:

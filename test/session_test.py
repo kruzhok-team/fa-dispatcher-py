@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 #  The Python FA dispatcher
 #
-#  The tests of the session: a scripted editor against fad_session
+#  The tests of the session: a scripted editor against fad.session
 #
 #  Copyright (C) 2026 Alexey Fedoseev <aleksey@fedoseev.net>
 #
@@ -44,7 +44,7 @@ if os.environ.get('FAD_BACKEND') == 'cml':
     sys.modules['CyberiadaML'] = cml
 
 import fad  # pylint: disable=wrong-import-position
-import fad_session  # pylint: disable=wrong-import-position
+import fad.session  # pylint: disable=wrong-import-position
 
 DECODER = os.path.join(REPOSITORY, 'examples', 'morse-decoder.graphml')
 
@@ -60,7 +60,7 @@ def notification(method, **params):
 def session(*lines):
     """The messages of the session for the editor's lines."""
     out = io.StringIO()
-    code = fad_session.serve(fad.Dispatcher(DECODER), io.StringIO('\n'.join(lines) + '\n'), out)
+    code = fad.session.serve(fad.Dispatcher(DECODER), io.StringIO('\n'.join(lines) + '\n'), out)
     return code, [json.loads(line) for line in out.getvalue().splitlines()]
 
 
@@ -119,7 +119,7 @@ def main():
         notification('event', name='EOF'),
         request(3, 'unknown'))
     error = next(m for m in messages if m.get('id') == 2)
-    check('a wrong tape', error['error']['code'] == fad_session.INVALID_PARAMS and
+    check('a wrong tape', error['error']['code'] == fad.session.INVALID_PARAMS and
           error['error']['data'][0]['line'] == 1, error)
     final = last_state(messages)
     check('the user symbols and the end button', final['verdict'] == 'accepted' and
@@ -127,7 +127,7 @@ def main():
     rows = [m['params'] for m in messages if m.get('method') == 'history']
     check('the origin user', all(r['origin'] == 'user' for r in rows) and len(rows) == 4, rows)
     check('an unknown request', messages[-1].get('error', {}).get('code') ==
-          fad_session.METHOD_NOT_FOUND, messages[-1])
+          fad.session.METHOD_NOT_FOUND, messages[-1])
 
     with tempfile.TemporaryDirectory() as directory:
         path = os.path.join(directory, 'saved.tape')

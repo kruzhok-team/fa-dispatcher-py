@@ -4,9 +4,9 @@ cmake_minimum_required(VERSION 3.16)
 # nothing is compiled
 project(fa-dispatcher-py VERSION 0.1.0 LANGUAGES NONE)
 
-# the place of the pure Python modules on Debian
+# the place of the pure Python packages on Debian
 set(PYTHON_INSTALL_DIR "lib/python3/dist-packages" CACHE STRING
-    "the directory of the fad modules under the prefix")
+    "the directory of the fad package under the prefix")
 # the system plugin folder of CyberiadaPro
 set(PLUGIN_INSTALL_DIR "share/cyberiada-pro/plugins/fa-dispatcher")
 set(DOC_INSTALL_DIR "share/doc/python3-fa-dispatcher")
@@ -14,18 +14,19 @@ set(DOC_INSTALL_DIR "share/doc/python3-fa-dispatcher")
 set(CMAKE_INSTALL_DEFAULT_DIRECTORY_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
     GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/fad.py
-              ${CMAKE_CURRENT_SOURCE_DIR}/fad_model.py
-              ${CMAKE_CURRENT_SOURCE_DIR}/fad_reader.py
-              ${CMAKE_CURRENT_SOURCE_DIR}/fad_tape.py
-              ${CMAKE_CURRENT_SOURCE_DIR}/fad_cli.py
-              ${CMAKE_CURRENT_SOURCE_DIR}/fad_session.py
-              ${CMAKE_CURRENT_SOURCE_DIR}/fad_plugin.py
-        DESTINATION ${PYTHON_INSTALL_DIR})
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/fad/__init__.py
+              ${CMAKE_CURRENT_SOURCE_DIR}/fad/__main__.py
+              ${CMAKE_CURRENT_SOURCE_DIR}/fad/model.py
+              ${CMAKE_CURRENT_SOURCE_DIR}/fad/reader.py
+              ${CMAKE_CURRENT_SOURCE_DIR}/fad/tape.py
+              ${CMAKE_CURRENT_SOURCE_DIR}/fad/cli.py
+              ${CMAKE_CURRENT_SOURCE_DIR}/fad/session.py
+              ${CMAKE_CURRENT_SOURCE_DIR}/fad/plugin.py
+        DESTINATION ${PYTHON_INSTALL_DIR}/fad)
 
 # the command, as the wheel's entry point makes it
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/fa-run
-     "#!/usr/bin/python3\nimport sys\nfrom fad_cli import main\nsys.exit(main())\n")
+     "#!/usr/bin/python3\nimport sys\nfrom fad.cli import main\nsys.exit(main())\n")
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/fa-run DESTINATION bin)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/editor-plugin/plugin.json
