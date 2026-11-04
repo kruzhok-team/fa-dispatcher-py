@@ -55,9 +55,9 @@ binding):
     pip install /path/to/fa-dispatcher-py
     fa-run --install-editor-plugin
 
-Check with `fa-run --help`. The modules are plain files, so the directory of
-the repository on the Python path works as well: `python3 -m fad_cli` is
-`fa-run`.
+Check with `fa-run --help`. The package `fad` is in the root of the
+repository, so the directory of the repository on the Python path works as
+well: `python3 -m fad` is `fa-run`.
 
 On Windows the CyberiadaPro installer (the editor's
 `packaging/build-windows-installer.sh`) installs the package with its Python
@@ -90,7 +90,7 @@ marking the active state and showing the verdict and the output - and Test
 the Tapes... - a tests file, a finding per failing tape.
 
 * The Debian package installs it into the system plugin folder; the plugin
-  runs `python3 -m fad_cli` with the packaged modules.
+  runs `python3 -m fad` with the packaged modules.
 * `fa-run --install-editor-plugin [DIR]` copies the plugin of a pip
   installation or of this source tree into the user plugin folder of the
   editor (`~/.local/share/Cyberiada/CyberiadaPro/plugins` on Linux,

@@ -18,11 +18,11 @@ are in `ARCHITECTURE.md`.
  state() symbols() classify()             │
       ▲                                   │
       └──── steps, results, trace ◀───────┘
- fad_tape: tapes, tests files     fad_session: the editor     fa-run: the command line
+ fad.tape: tapes, tests files     fad.session: the editor     fa-run: the command line
 ```
 
-Everything is imported from one module: `import fad`; `fad_tape` and
-`fad_session` are imported on their own.
+Everything is imported from one module: `import fad`; `fad.tape` and
+`fad.session` are imported on their own.
 
 ## Conventions
 
@@ -234,7 +234,7 @@ at/ @
 
 ## Tapes and tests files
 
-`fad_tape` reads and writes the tape files and the tests files.
+`fad.tape` reads and writes the tape files and the tests files.
 
 A tape file:
 
@@ -323,14 +323,14 @@ They are subclasses of `fad.FAError`.
 
 ## Sessions
 
-`fad_session` serves an automaton to the CyberiadaPro editor. The editor
+`fad.session` serves an automaton to the CyberiadaPro editor. The editor
 marks the active state and the fired transition on the diagram, and the
 user steps through a tape, runs it, types symbols and saves the run. The
 protocol is the Sessions chapter of the editor's `PLUGIN-API.md`; this is a
 driven session with the stream logic.
 
 ```
- CyberiadaPro               fad_session                     fad
+ CyberiadaPro               fad.session                     fad
  ────────────               ───────────                     ───
  control, event, ──stdin──▶ the tape, the position ───────▶ a Dispatcher:
  input, save                the symbols typed               start() feed() end()

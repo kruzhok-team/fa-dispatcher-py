@@ -1,6 +1,6 @@
 # The Python FA Dispatcher Architecture
 
-Document version: 0.7 (2026-10-28)
+Document version: 0.8 (2026-11-04)
 
 The dispatcher executes the diagrams of deterministic finite automata (FA) at
 run time. The diagrams follow ПРИМС:КА, the FA extension of PNST 984-2024
@@ -15,7 +15,7 @@ an FA has no event queue, no clock and no components with code, and its
 actions are output symbols, not Python. It depends on the `CyberiadaML`
 module and on the Python 3 standard library only. The module is the binding
 of `libcyberiadamlpp-py` when it is installed, else the pure-Python interface
-of `cyberiadaml-py` (`cyberiadaml_py.cml`), chosen as in `hsmd_reader.py`.
+of `cyberiadaml-py` (`cyberiadaml_py.cml`), chosen as in `hsmd/reader.py`.
 
 ## Usage requirements
 
@@ -63,7 +63,7 @@ open:
 ## Structure
 
 ```
-   fad_reader.py                 fad_model.py
+   fad/reader.py                 fad/model.py
  +----------------+   model    +----------------+
  |     Reader     | ---------> |   Automaton    |
  |  CyberiadaML,  |            |  the states,   |
@@ -71,7 +71,7 @@ open:
  +----------------+            +----------------+
                                         | edges
                                         v
-   fad_tape.py                   fad.py
+   fad/tape.py                   fad/__init__.py
  +----------------+  symbols   +----------------+  verdict, output
  |     Tapes      | ---------> |   Dispatcher   | -----------------> the application,
  |  symbol, text, |            |  start, feed,  | <----------------- fa-run
@@ -83,24 +83,26 @@ open:
                                +----------------+
        the editor <-- JSON --> |    Session     |
                                +----------------+
-                                 fad_session.py
+                                 fad/session.py
 ```
 
-The modules are plain files in the repository root, as in hsmd.
+The modules are the package `fad` (`fad/` in the repository root, as `hsmd/`
+in hsm-dispatcher-py), installed as `dist-packages/fad/` by the Debian package
+and `site-packages/fad/` by pip; `python3 -m fad` is `fa-run`.
 
 | Module | Role |
 |---|---|
-| `fad.py` | The `Dispatcher`: the run, the queries, the trace; the exports. The only module an application imports. |
-| `fad_model.py` | The `Automaton`: the states and their parents, the initials, the accepting states, the table of the steps. No CyberiadaML. |
-| `fad_reader.py` | Opens the document with the `CyberiadaML` module and builds the automaton; reads the `Classes` component. |
-| `fad_tape.py` | The tapes: the symbols, the texts, the tape file and the tests file. |
-| `fad_session.py` | The editor session: the stream logic over stdin and stdout. |
-| `fad_cli.py` | `fa-run`, the command line. |
-| `fad_plugin.py` | `fa-run --install-editor-plugin`: the plugin copied into the user plugin folder of the editor, pinned to the installing Python. |
+| `fad/__init__.py` | The `Dispatcher`: the run, the queries, the trace; the exports. The only module an application imports. |
+| `fad/model.py` | The `Automaton`: the states and their parents, the initials, the accepting states, the table of the steps. No CyberiadaML. |
+| `fad/reader.py` | Opens the document with the `CyberiadaML` module and builds the automaton; reads the `Classes` component. |
+| `fad/tape.py` | The tapes: the symbols, the texts, the tape file and the tests file. |
+| `fad/session.py` | The editor session: the stream logic over stdin and stdout. |
+| `fad/cli.py` | `fa-run`, the command line; `fad/__main__.py` runs it for `python3 -m fad`. |
+| `fad/plugin.py` | `fa-run --install-editor-plugin`: the plugin copied into the user plugin folder of the editor, pinned to the installing Python. |
 
 ## The model
 
-The reader walks the state machine as `hsmd_reader.py` does
+The reader walks the state machine as `hsmd/reader.py` does
 (`get_children()`, `get_actions()`, `get_transitions()`) and builds:
 
 * the simple and the composite states with their parents, the `entry/`
@@ -163,7 +165,7 @@ the final state, writes nothing.
 | Form | Example | Items |
 |---|---|---|
 | symbols: the command line, a tests file | `1 0 1 1` | the words between the spaces |
-| a tape file | one symbol per line, `#` comments | one item per line: the untimed form of the hsmd stream (`hsmd_stream`) |
+| a tape file | one symbol per line, `#` comments | one item per line: the untimed form of the hsmd stream (`hsmd.stream`) |
 | a text | `"j.doe@mail.ru"` | one item per character, through the classes |
 
 A line of a tape file in double quotes is a text: `"j.doe@mail.ru"` gives
@@ -305,8 +307,8 @@ verdict and output, and the state where the run stopped.
 
 The editor runs the automaton step by step through a session (the editor's
 `PLUGINS.md`, Level 2, and the Sessions chapter of `PLUGIN-API.md`, the
-`stream` logic). `fad_session.py` serves the protocol over stdin and stdout,
-as `hsmd_session.py` does for an HSM; the line framing is the same, the code
+`stream` logic). `fad/session.py` serves the protocol over stdin and stdout,
+as `hsmd/session.py` does for an HSM; the line framing is the same, the code
 is not shared, so that the dependency stays one way.
 
 ```json
@@ -338,8 +340,8 @@ is not shared, so that the dependency stays one way.
 
 | Action | Kind | Runs |
 |---|---|---|
-| `test` "Test the Tapes..." | one-shot, `diagnostics`, `exit_ok` 0 and 1 | `python3 -m fad_cli ${document} --test ${param:tests} --diagnostics ${diagnostics}`; the parameter `tests` (a file, per document) starts at `<document>.tests` |
-| `tape` "Run on a Tape" | session | `python3 -m fad_cli ${document} --session` |
+| `test` "Test the Tapes..." | one-shot, `diagnostics`, `exit_ok` 0 and 1 | `python3 -m fad ${document} --test ${param:tests} --diagnostics ${diagnostics}`; the parameter `tests` (a file, per document) starts at `<document>.tests` |
+| `tape` "Run on a Tape" | session | `python3 -m fad ${document} --session` |
 
 The plugin lives in `editor-plugin/` (`plugin.json`, the icons, the Russian
 translation) and is installed into the plugin directory of the editor as
@@ -527,13 +529,13 @@ skipped without cyberiadaml-py.
 
 hsmd is the oracle of the semantics. When it is found (installed or beside
 this repository), every diagram is built
-as an `hsmd.Machine` (`hsmd_build.py`) from the elements the reader read - the
+as an `hsmd.Machine` (`hsmd/build.py`) from the elements the reader read - the
 outputs as functions that append the symbol to a list - and runs the same
 tapes: `dropped` is a rejection, `finished` after `EOF` an acceptance. The
 verdicts and the outputs must agree with the dispatcher's, whose step table
 is computed on its own.
 
-`test/session_test.py` drives `fad_session.py` with a scripted editor, and
+`test/session_test.py` drives `fad/session.py` with a scripted editor, and
 `test/plugin_test.py` runs the plugin in the editor's batch mode: the
 session script `test/session/decoder.session` (`--session-script`,
 `expect-verdict`) and Test the Tapes (`--dump-plugin`); it is skipped
@@ -547,7 +549,7 @@ without a CyberiadaPro binary.
 | 1 (done) | the reader, the model, the run, the classes, the tapes, `fa-run`, the examples, the tests and the oracle; the output symbols of `libcyberiadaml` for the encoder |
 | 2 (done) | the session, the plugin's Run on a Tape and Test the Tapes, with the editor test |
 | 3 (done) | the packages: pip (the plugin as data files), Debian (`python3-fa-dispatcher`, the plugin in the system folder), `--install-editor-plugin` |
-| 4 (done) | the Windows installer: the CyberiadaPro setup installs the package with its Python plugins and binds the plugin (`-m fad_cli --install-editor-plugin`); its plugin check runs Test the Tapes on the Morse decoder |
+| 4 (done) | the Windows installer: the CyberiadaPro setup installs the package with its Python plugins and binds the plugin (`-m fad --install-editor-plugin`); its plugin check runs Test the Tapes on the Morse decoder |
 | 5 | Determinize, Minimize, Export the Table (a `replace` output laid out by the editor) |
 
 ## Open questions
