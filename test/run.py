@@ -189,7 +189,10 @@ def cli(argv, stdin=''):
     sys.stdin = io.StringIO(stdin)
     try:
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
-            code = fad_cli.main(argv)
+            try:
+                code = fad_cli.main(argv)
+            except SystemExit as e:  # an argparse error is a FAIL with its message
+                code = e.code
     finally:
         sys.stdin = saved
     return code, out.getvalue(), err.getvalue()

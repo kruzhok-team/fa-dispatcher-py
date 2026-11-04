@@ -121,7 +121,8 @@ def main(argv=None):
     parser.add_argument(INSTALL, metavar='DIR', nargs='?', const='',
                         help='copy the editor plugin into the plugin folder of the editor '
                              '(or into DIR) and exit')
-    args = parser.parse_args(argv)
+    # before Python 3.12.8 parse_args refuses the symbols after an option
+    args = parser.parse_intermixed_args(argv)
     if args.symbols and (args.text is not None or args.tape or args.test or args.session):
         parser.error('the symbols go without --text, --tape, --test and --session')
     try:
