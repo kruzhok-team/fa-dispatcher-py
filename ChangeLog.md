@@ -1,6 +1,6 @@
 # fa-dispatcher-py project changelog
 
-## Version 0.1.0 (unreleased)
+## Version 0.1.0
 
 Added:
 - the package `fad`: the dispatcher of the deterministic finite automaton diagrams
