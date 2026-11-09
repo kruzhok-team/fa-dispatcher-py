@@ -87,7 +87,9 @@ print(result.verdict, result.output)          # accepted ['ODD']
 `editor-plugin` is the plugin of the CyberiadaPro editor, Plugins > Finite
 Automata: Run on a Tape - the automaton step by step on a tape, the editor
 marking the active state and showing the verdict and the output - and Test
-the Tapes... - a tests file, a finding per failing tape.
+the Tapes... - a tests file, a finding per failing tape. Both need a valid
+automaton: an editor with the plugin conditions greys them out on another
+diagram and on a draft breaking EXT-FA, naming its first violation.
 
 * The Debian package installs it into the system plugin folder; the plugin
   runs `python3 -m fad` with the packaged modules.

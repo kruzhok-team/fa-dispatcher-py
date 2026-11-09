@@ -25,6 +25,9 @@
       "label": "Test the Tapes...",
       "result": "diagnostics",
       "save": true,
+      "when": [
+        "fa-valid"
+      ],
       "exit_ok": [
         0,
         1
@@ -53,6 +56,9 @@
         "id": "tape",
         "label": "Run on a Tape",
         "save": true,
+        "when": [
+          "fa-valid"
+        ],
         "icon": "icons/tape.svg",
         "toolbar": true,
         "description": "Run the automaton on a tape one symbol at a time; the editor marks the active state and the fired transition and shows the verdict and the output",

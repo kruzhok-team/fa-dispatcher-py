@@ -133,6 +133,24 @@ def main():
                           '--dump-plugin')
         failed += report('the tests action', code == 0 and 'count: 1' in out and
                          'error - T1: line 2: expected accepted, got rejected at EOF' in out, out)
+        # a diagram the actions do not fit is refused by the editor, without a run
+        older = 'an editor older than the conditions of the actions, EDIT-PLUG-52?\n'
+        code, out = batch(binary, env, 'test/not-fa.graphml', '--plugin-path', '.',
+                          '--run-plugin', PLUGIN + ':test', '--plugin-param', 'tests=' + tests,
+                          '--dump-plugin')
+        failed += report('not an automaton refused',
+                         code == 6 and 'the diagram is not a finite automaton' in out, older + out)
+        with open(os.path.join(REPOSITORY, 'examples', 'parity-recognizer.graphml'),
+                  encoding='utf-8') as source:
+            text = source.read()
+        symbol = '<data key="dData">0/</data>'
+        broken = os.path.join(profile, 'broken.graphml')
+        with open(broken, 'w', encoding='utf-8') as target:
+            target.write(text.replace(symbol, '', 1))
+        code, out = batch(binary, env, broken, '--plugin-path', '.', '--run-plugin',
+                          PLUGIN + ':tape', '--session-script', 'test/session/decoder.session')
+        failed += report('a broken automaton refused', symbol in text and code == 6 and
+                         'the automaton breaks EXT-FA' in out, older + out)
     return 1 if failed else 0
 
 

@@ -1,5 +1,12 @@
 # fa-dispatcher-py project changelog
 
+## Version 0.1.1 (unreleased)
+
+Changed:
+- the actions of the editor plugin declare that they need a valid automaton
+  (`when: fa-valid`): an editor with the plugin conditions greys them out on
+  another diagram and on a draft breaking EXT-FA.
+
 ## Version 0.1.0
 
 Added:

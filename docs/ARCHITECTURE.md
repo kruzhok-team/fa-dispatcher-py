@@ -348,6 +348,8 @@ translation) and is installed into the plugin directory of the editor as
 `fa-dispatcher`, as the hsm-to-python one. A plugin needs a one-shot action,
 so Test the Tapes is that. There is no action to check the automaton: the
 editor lists the violations of a draft itself (Diagram > Check the Diagram).
+Both actions declare `"when": ["fa-valid"]`, so the editor greys them out on a
+diagram that is not a valid automaton instead of a run failing to load it.
 
 A run has no clock: Run goes to the verdict at once, and the session offers
 no Pause.
