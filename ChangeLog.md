@@ -7,6 +7,11 @@ Changed:
   (`when: fa-valid`): an editor with the plugin conditions greys them out on
   another diagram and on a draft breaking EXT-FA.
 
+Fixed:
+- the plugin test checks the refusals only with an editor that has the
+  conditions of the actions (an older one runs the action and fa-run exits 2),
+  and names the editor it runs.
+
 ## Version 0.1.0
 
 Added:

@@ -21,8 +21,10 @@
 #  -----------------------------------------------------------------------------
 
 """The plugin: its installation, then in the editor the session script of
-test/session and the tests action; the editor part is skipped without a
-CyberiadaPro binary that starts (CYBERIADA_PRO, PATH, or the sibling build)."""
+test/session, the tests action and the refusal of a diagram the actions do not
+fit; the editor part is skipped without a CyberiadaPro binary that starts
+(CYBERIADA_PRO, PATH, or the sibling build), the refusals with an editor before
+the conditions of the actions."""
 
 import json
 import os
@@ -39,6 +41,9 @@ import fad.plugin  # pylint: disable=wrong-import-position
 
 PLUGIN = fad.plugin.PLUGIN_ID
 TIMEOUT_S = 120
+# a plugin needing an unset variable: an editor with the conditions disables it
+PROBE_ID = 'fad-conditions-probe'
+PROBE_VARIABLE = 'FAD_CONDITIONS_PROBE'
 
 
 def report(name, ok, detail=''):
@@ -108,6 +113,22 @@ def batch(binary, env, *args):
     return result.returncode, result.stdout
 
 
+def conditions(binary, env, profile):
+    """Whether the editor checks the conditions of the plugins (EDIT-PLUG-50..52):
+    it disables a plugin whose requires do not hold, an older editor ignores them."""
+    folder = os.path.join(profile, 'probe', PROBE_ID)
+    os.makedirs(folder)
+    with open(os.path.join(folder, fad.plugin.DESCRIPTOR), 'w', encoding='utf-8') as target:
+        json.dump({'api': 1, 'id': PROBE_ID, 'name': 'Conditions probe', 'version': '1.0.0',
+                   'requires': {'env': [PROBE_VARIABLE]},
+                   'actions': [{'id': 'probe', 'label': 'Probe', 'result': 'log',
+                                'argv': ['probe']}]}, target)
+    probe_env = {k: v for k, v in env.items() if k != PROBE_VARIABLE}
+    _, out = batch(binary, probe_env, '--plugin-path', os.path.dirname(folder), '--list-plugins')
+    return any(line.startswith(PROBE_ID + ' ') and ' disabled ' in line
+               for line in out.splitlines())
+
+
 def main():
     failed = installer()
     with tempfile.TemporaryDirectory() as profile:
@@ -116,6 +137,7 @@ def main():
         if binary is None:
             print('skipped the editor part: no CyberiadaPro binary')
             return 1 if failed else 0
+        print('the editor: ' + binary)
         code, out = batch(binary, env, '--plugin-path', '.', '--list-plugins')
         if 'session: tape' not in out:
             print('skipped the editor part: the editor has no plugin sessions\n' + out)
@@ -134,12 +156,15 @@ def main():
         failed += report('the tests action', code == 0 and 'count: 1' in out and
                          'error - T1: line 2: expected accepted, got rejected at EOF' in out, out)
         # a diagram the actions do not fit is refused by the editor, without a run
-        older = 'an editor older than the conditions of the actions, EDIT-PLUG-52?\n'
+        if not conditions(binary, env, profile):
+            print('skipped the refusals: the editor predates the conditions of the actions '
+                  '(EDIT-PLUG-50..52)')
+            return 1 if failed else 0
         code, out = batch(binary, env, 'test/not-fa.graphml', '--plugin-path', '.',
                           '--run-plugin', PLUGIN + ':test', '--plugin-param', 'tests=' + tests,
                           '--dump-plugin')
         failed += report('not an automaton refused',
-                         code == 6 and 'the diagram is not a finite automaton' in out, older + out)
+                         code == 6 and 'the diagram is not a finite automaton' in out, out)
         with open(os.path.join(REPOSITORY, 'examples', 'parity-recognizer.graphml'),
                   encoding='utf-8') as source:
             text = source.read()
@@ -150,7 +175,7 @@ def main():
         code, out = batch(binary, env, broken, '--plugin-path', '.', '--run-plugin',
                           PLUGIN + ':tape', '--session-script', 'test/session/decoder.session')
         failed += report('a broken automaton refused', symbol in text and code == 6 and
-                         'the automaton breaks EXT-FA' in out, older + out)
+                         'the automaton breaks EXT-FA' in out, out)
     return 1 if failed else 0
 
 

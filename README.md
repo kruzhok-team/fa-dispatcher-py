@@ -113,8 +113,11 @@ diagrams (when `cyberiadaml-compat-tests` is found beside this repository),
 check that its `X-FA` negatives are refused, and run the same tapes on
 `hsm-dispatcher-py` as an oracle when it is found. `session_test.py` drives
 the editor session with a script, `plugin_test.py` runs the plugin in the
-batch mode of CyberiadaPro (skipped without it). `cmake -B build && cd build
-&& ctest` runs them all on both backends. `pylint.sh` runs the linter.
+batch mode of CyberiadaPro (skipped without it) and names the editor it runs:
+`CYBERIADA_PRO`, else `CyberiadaPro` on `PATH`, else the sibling build. The
+refusal of a diagram the actions do not fit is checked only with an editor
+that has the conditions of the actions. `cmake -B build && cd build && ctest`
+runs them all on both backends. `pylint.sh` runs the linter.
 
 ## Requirements
 
