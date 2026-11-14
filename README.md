@@ -39,7 +39,7 @@ The Debian package - the modules, `fa-run`, the editor plugin in
 examples in `/usr/share/doc/python3-fa-dispatcher`:
 
     cmake -B build && cd build && ctest && cpack -G DEB
-    sudo apt install ./python3-fa-dispatcher_0.1.0_all.deb
+    sudo apt install ./python3-fa-dispatcher_0.1.1_all.deb
 
 `ctest` runs the tests with the Python CMake finds
 (`-DPython3_EXECUTABLE=...` selects another one). The package depends on

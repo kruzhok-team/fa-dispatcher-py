@@ -2,7 +2,7 @@
   "api": 1,
   "id": "fa-dispatcher",
   "name": "Finite Automata",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Runs a finite automaton diagram (type/ fa) on a tape: step by step with the marks on the diagram, the verdict and the output, or over a tests file. Needs the fa-dispatcher-py modules with CyberiadaML in the Python the plugin runs with.",
   "interpreter": "python3",
   "env": {
