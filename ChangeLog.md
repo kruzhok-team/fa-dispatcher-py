@@ -1,6 +1,6 @@
 # fa-dispatcher-py project changelog
 
-## Version 0.1.1 (unreleased)
+## Version 0.1.1
 
 Changed:
 - the actions of the editor plugin declare that they need a valid automaton
